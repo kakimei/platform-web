@@ -54,7 +54,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://localhost:8081/platform/reserve/alllist?token='+$cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve/alllist?token='+$cookies.get('token'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -74,7 +74,7 @@
         $scope.feedback = function (reservationInfoId) {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/feedback/thumbsUp?token='+$cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/feedback/thumbsUp?token='+$cookies.get('token'),
             data: {
               "reservationInfoId": reservationInfoId,
               "feedBackType": "GOOD"

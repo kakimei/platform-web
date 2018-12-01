@@ -44,7 +44,7 @@
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/reserve?token='+$cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve?token='+$cookies.get('token'),
             data: {
               "reservationInfoId": null,
               "linkManName": $scope.reserveVO.linkManName,
