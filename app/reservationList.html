@@ -30,6 +30,8 @@
 
       .btn.blue { background: #2ae; }
 
+      .btn.gray { background: #b5b5b5; }
+
       table, td  {
         border: 1px solid grey;
         border-collapse: collapse;
@@ -78,6 +80,12 @@
           var hre = 'allReservation.html';
           location.href = hre;
         };
+
+        $scope.logout = function () {
+          $cookies.put("user", null);
+          $cookies.put("token", null);
+          location.href = 'login.html';
+        };
       });
 
     </script>
@@ -118,6 +126,7 @@
       </table>
       <button type="button" class="btn blue" ng-click="reserve()">预定</button>
       <button type="button" class="btn blue" ng-click="allReservation()">所有活动</button>
+      <button type="button" class="btn gray" ng-click="logout()">退出</button>
     </div>
   </body>
 </html>

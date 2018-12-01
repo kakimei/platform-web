@@ -39,6 +39,7 @@
         登录名:<input type="text" ng-model="loginVO.userName" required/> <br />
         密码:<input type="password" ng-minlength="6" ng-maxlength="15" ng-model="loginVO.password" required/> <br />
         <button type="submit" class="btn blue">登录</button>
+        <button type="button" class="btn blue" ng-click="register()">注册</button>
       </form>
     </div>
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
@@ -73,6 +74,10 @@
           }, function (resp) {
             alert("登录失败！服务调用失败！");
           });
+        };
+
+        $scope.register = function () {
+          self.location='register.html';
         }
       });
     </script>

@@ -29,6 +29,8 @@
       }
 
       .btn.blue { background: #2ae; }
+      .btn.gray { background: #b5b5b5; }
+
     </style>
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
@@ -71,7 +73,14 @@
             alert("预约失败！服务调用失败！跳转到登录页面");
             self.location='login.html';
           });
-        }
+        };
+
+        $scope.logout = function () {
+          $cookies.put("user", null);
+          $cookies.put("token", null);
+          location.href = 'login.html';
+        };
+
       });
     </script>
     <title>资源预约</title>
@@ -93,6 +102,7 @@
         <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM"/>团队
         <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" />个人<br />
         <button type="submit" class="btn blue">预约</button>
+        <button type="button" class="btn gray" ng-click="logout()">退出</button>
       </form>
     </div>
   </body>
