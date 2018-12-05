@@ -3,51 +3,36 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0" />
-    <style>
-      body {
-        height: 800px;
-      }
-
-      .header {
-        width: 100%;
-        height: 5%;
-        background-color: lightblue;
-      }
-
-      .main {
-        float: right;
-        width: 100%;
-        height: 75%;
-        background-color: whitesmoke;
-      }
-
-      .footer {
-        clear: both;
-        width: 100%;
-        height: 10%;
-        background-color: darkgray;
-      }
-
-      .btn.blue { background: #2ae; }
-    </style>
-    <title>用户登录</title>
+    <link rel="stylesheet" href="css/default.css">
   </head>
   <body>
-    <div class="header">登录</div>
-    <div ng-controller="loginController as loginVO" class="main">
-      <form ng-submit="loginForm()">
-        登录名:<input type="text" ng-model="loginVO.userName" required/> <br />
-        密码:<input type="password" ng-minlength="6" ng-maxlength="15" ng-model="loginVO.password" required/> <br />
-        <button type="submit" class="btn blue">登录</button>
-        <button type="button" class="btn blue" ng-click="register()">注册</button>
-      </form>
+    <div class="header">
+      <div>
+        <a class="home"><i></i></a>
+        <span id="lblTitle">杨浦滨江阅读建筑讲解预约系统</span>
+      </div>
+    </div>
+    <div>
+      <img class="header-image" src="img/hd-bg.jpeg">
+    </div>
+    <div class="middle">
+      <div ng-controller="loginController as loginVO" class="main" data-ng-init="load()">
+        <div>
+          <form ng-submit="loginForm()">
+            登录名:<input type="text" ng-model="loginVO.userName" required /> <br />
+            密码:<input type="password" ng-minlength="6" ng-maxlength="15" ng-model="loginVO.password" required /> <br />
+            <button type="submit" class="btn blue">登录</button>
+            <button type="button" class="btn blue" ng-click="register()">注册</button>
+          </form>
+        </div>
+      </div>
     </div>
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
 
     <script>
       var app = angular.module("login", ['ngCookies']);
-      app.controller('loginController', function ($cookies, $scope, $http) {
+      app.controller('loginController', function ($cookies, $scope, $http, $window) {
         $scope.loginForm = function () {
           $http({
             method: 'POST',
@@ -61,14 +46,14 @@
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            if(resp.data.token != "" && resp.data.token != null){
+            if (resp.data.token != "" && resp.data.token != null) {
               alert("登录成功！");
               var token = resp.data.token;
               var userName = resp.data.userName;
               $cookies.put("user", userName);
               $cookies.put("token", token);
-              self.location='reservationList.html';
-            }else{
+              self.location = 'reservation.html';
+            } else {
               alert("登录失败！");
             }
           }, function (resp) {
@@ -77,8 +62,9 @@
         };
 
         $scope.register = function () {
-          self.location='register.html';
+          self.location = 'register.html';
         }
+
       });
     </script>
   </body>

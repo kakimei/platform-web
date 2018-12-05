@@ -3,34 +3,24 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0" />
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/button.css">
     <style>
-      body {
-        height: 800px;
+      form div {
+        margin: 5px 0;
       }
 
-      .header {
-        width: 100%;
-        height: 5%;
-        background-color: lightblue;
+      .int label {
+        width: 100px;
+        float: left;
+        text-align: right;
       }
 
-      .main {
-        float: right;
-        width: 100%;
-        height: 75%;
-        background-color: whitesmoke;
+      .int input {
+        padding: 1px 1px;
+        border: 1px solid #ccc;
+        height: 16px;
       }
-
-      .footer {
-        clear: both;
-        width: 100%;
-        height: 10%;
-        background-color: darkgray;
-      }
-
-      .btn.blue { background: #2ae; }
-      .btn.gray { background: #b5b5b5; }
-
     </style>
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
@@ -39,8 +29,8 @@
       app.controller('reservationModifyController', function ($cookies, $scope, $http, $filter) {
         $scope.canModify = false;
         $scope.canSignin = false;
-        $scope.reserveVO.reservationInfoId="";
-        $scope.reserveVO.linkManName="";
+        $scope.reserveVO.reservationInfoId = "";
+        $scope.reserveVO.linkManName = "";
         $scope.reserveVO.sex = "MALE";
         $scope.reserveVO.age = "";
         $scope.reserveVO.phoneNumber = "";
@@ -53,13 +43,13 @@
           $scope.reserveVO.reservationInfoId = urlValue;
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/modify?token='+$cookies.get('token')+'&reservationInfoId='+$scope.reserveVO.reservationInfoId,
+            url: 'http://yp.compass-trip.com:8081/platform/reserve/modify?token=' + $cookies.get('token') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            if(resp.data != null){
+            if (resp.data != null) {
               $scope.reserveVO.reservationInfoId = resp.data.reservationInfoId;
               $scope.reserveVO.linkManName = resp.data.linkManName;
               $scope.reserveVO.sex = resp.data.sex;
@@ -74,24 +64,24 @@
               var startDate = $filter("date")($scope.reserveVO.reserveBegin, "yyyyMMdd");
               $scope.canModify = startDate > now;
               $scope.canSignin = startDate <= now && !$scope.reserveVO.signIn;
-            }else{
+            } else {
               alert("不可修改！重新登录");
-              self.location='login.html';
+              self.location = 'login.html';
             }
           }, function (resp) {
             alert("修改失败！服务调用失败！跳转到登录页面");
-            self.location='login.html';
+            self.location = 'login.html';
           });
         };
 
         $scope.back = function () {
-          self.location='reservationList.html';
+          self.location = 'reservationList.html';
         };
 
         $scope.signin = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/signin?token='+$cookies.get('token'),
+            url: 'http://yp.compass-trip.com:8081/platform/reserve/signin?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -100,22 +90,46 @@
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            if(resp.data != null && resp.data != ''){
+            if (resp.data != null && resp.data != '') {
               alert("签到成功！");
-              self.location='reservationList.html';
-            }else{
+              self.location = 'reservationList.html';
+            } else {
               alert("签到失败！");
             }
           }, function (resp) {
             alert("修改失败！服务调用失败！跳转到登录页面");
-            self.location='login.html';
+            self.location = 'login.html';
+          });
+        };
+
+        $scope.cancel = function () {
+          $http({
+            method: 'POST',
+            url: 'http://yp.compass-trip.com:8081/platform/reserve/cancel?token=' + $cookies.get('token'),
+            data: {
+              "reservationInfoId": $scope.reserveVO.reservationInfoId
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            if (resp.data != null && resp.data != '') {
+              alert("取消成功！");
+              self.location = 'reservationList.html';
+            } else {
+              alert("取消失败！");
+            }
+          }, function (resp) {
+            alert("取消失败！服务调用失败！跳转到登录页面");
+            self.location = 'login.html';
           });
         };
 
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve?token='+$cookies.get('token'),
+            url: 'http://yp.compass-trip.com:8081/platform/reserve?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId,
               "linkManName": $scope.reserveVO.linkManName,
@@ -132,15 +146,15 @@
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            if(resp.data == true){
+            if (resp.data == true) {
               alert("修改成功！");
-              self.location='reservationList.html';
-            }else{
+              self.location = 'reservationList.html';
+            } else {
               alert("修改失败！");
             }
           }, function (resp) {
             alert("修改失败！服务调用失败！跳转到登录页面");
-            self.location='login.html';
+            self.location = 'login.html';
           });
         };
 
@@ -155,26 +169,55 @@
     <title>资源预约</title>
   </head>
   <body>
-    <div class="header">预约系统</div>
-    <div ng-controller="reservationModifyController as reserveVO" class="main" data-ng-init="load()">
-      <form ng-submit="reserveForm()">
-        联系人姓名:<input type="text" ng-model="reserveVO.linkManName" required/> <br />
-        性别:
-        <input name="sex" type="radio" ng-model="reserveVO.sex" value="MALE"/>男
-        <input name="sex" type="radio" ng-model="reserveVO.sex" value="FEMALE"/>女<br />
-        年龄:<input type="number" ng-maxlength="2" string-to-number ng-model="reserveVO.age" /> <br />
-        电话号码:<input type="text" ng-maxlength="15" string-to-number ng-model="reserveVO.phoneNumber" required/> <br />
-        预约开始日期:<input type="date" ng-model="reserveVO.reserveBegin" required/> <br />
-        预约结束日期:<input type="date" ng-model="reserveVO.reserveEnd" required/> <br />
-        预约人数:<input type="number" ng-maxlength="4" ng-model="reserveVO.peopleCount" required/> <br />
-        预约类型:
-        <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM"/>团队
-        <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" />个人<br />
-        <button ng-if="canModify" type="submit" class="btn blue">修改</button>
-        <button ng-if="canSignin" type="button" class="btn blue" ng-click="signin()">签到</button>
-        <button type="button" class="btn blue" ng-click="back()">返回</button>
-        <button type="button" class="btn gray" ng-click="logout()">退出</button>
-      </form>
+    <div class="header">
+      <div>
+        <a class="home" href="reservation.html" title="预约"><i></i></a>
+        <a class="more" href="reservationList.html" title="预约一览"><i></i></a>
+        <span id="lblTitle">预约系统</span>
+      </div>
+    </div>
+    <div>
+      <img class="header-image" src="img/hd-bg.jpeg">
+    </div>
+    <div class="middle">
+      <div ng-controller="reservationModifyController as reserveVO" class="main" data-ng-init="load()">
+        <div>
+          <form ng-submit="reserveForm()">
+            <div class="int">
+              <label>联系人姓名:</label><input type="text" ng-model="reserveVO.linkManName" readonly  unselectable="on" />
+            </div>
+            <div class="int">
+              <label>性别:</label>
+              <input name="sex" type="radio" ng-model="reserveVO.sex" value="MALE" disabled/>男
+              <input name="sex" type="radio" ng-model="reserveVO.sex" value="FEMALE" disabled/>女
+            </div>
+            <div class="int">
+              <label>年龄:</label><input type="number" ng-maxlength="2" string-to-number ng-model="reserveVO.age" readonly  unselectable="on"/>
+            </div>
+            <div class="int">
+              <label>电话号码:</label><input type="text" ng-maxlength="15" string-to-number ng-model="reserveVO.phoneNumber" readonly  unselectable="on" />
+            </div>
+            <div class="int">
+              <label>预约开始日期:</label><input type="date" ng-model="reserveVO.reserveBegin" readonly  unselectable="on" />
+            </div>
+            <div class="int">
+              <label>预约结束日期:</label><input type="date" ng-model="reserveVO.reserveEnd" readonly  unselectable="on" />
+            </div>
+            <div class="int">
+              <label>预约人数:</label><input type="number" ng-maxlength="4" ng-model="reserveVO.peopleCount" readonly  unselectable="on" />
+            </div>
+            <div class="int">
+              <label>预约类型:</label>
+              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" disabled/>团队
+              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled/>个人
+            </div>
+            <button ng-if="canSignin" type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="signin()">签到</button>
+            <button ng-if="canModify" type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="cancel()">取消预约</button>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="back()">返回</button>
+            <button type="button" class="button button-glow button-border button-rounded button-primary button-tiny" style="margin-bottom: 10px" ng-click="logout()">退出</button>
+          </form>
+        </div>
+      </div>
     </div>
   </body>
 </html>

@@ -3,36 +3,10 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0" />
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/button.css">
     <style>
-      body {
-        height: 800px;
-      }
-
-      .header {
-        width: 100%;
-        height: 5%;
-        background-color: lightblue;
-      }
-
-      .main {
-        float: right;
-        width: 100%;
-        height: 75%;
-        background-color: whitesmoke;
-      }
-
-      .footer {
-        clear: both;
-        width: 100%;
-        height: 10%;
-        background-color: darkgray;
-      }
-
-      .btn.blue { background: #2ae; }
-
-      .btn.gray { background: #b5b5b5; }
-
-      table, td  {
+      table, td {
         border: 1px solid grey;
         border-collapse: collapse;
         padding: 5px;
@@ -44,19 +18,19 @@
     <script>
       var app = angular.module("reservationList", ['ngCookies']);
       app.controller('reservationListController', function ($cookies, $scope, $http) {
-        $scope.reservationListForm={};
-        $scope.activityT= {
-          "TEAM":"团",
-          "SINGLE":"个"
+        $scope.reservationListForm = {};
+        $scope.activityT = {
+          "TEAM": "团",
+          "SINGLE": "个"
         };
-        $scope.sexT= {
-          "MALE":"男",
-          "FEMALE":"女"
+        $scope.sexT = {
+          "MALE": "男",
+          "FEMALE": "女"
         };
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/list?token='+$cookies.get('token'),
+            url: 'http://yp.compass-trip.com:8081/platform/reserve/list?token=' + $cookies.get('token'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -65,11 +39,11 @@
             $scope.reservationListForm = resp.data;
           }, function (resp) {
             alert("获取列表失败！服务调用失败！");
-            self.location='login.html';
+            self.location = 'login.html';
           });
         };
         $scope.reserve = function () {
-          self.location='reserve.html';
+          self.location = 'reserve.html';
         };
         $scope.modify = function (reservationId) {
           var hre = 'reservationModify.html?reservationInfoId=' + reservationId;
@@ -92,41 +66,49 @@
     <title>预约记录一览</title>
   </head>
   <body>
-    <div class="header">预约记录一览</div>
-    <div ng-controller="reservationListController as reservationListVO" class="main" data-ng-init="load()">
-      <table>
-        <tr>
-          <th>联系人</th>
-          <th>类型</th>
-          <th>电话</th>
-          <th>开始日</th>
-          <th>结束日</th>
-          <th></th>
-        </tr>
-        <tr ng-repeat="item in reservationListForm">
-          <td hidden>{{item.reservationInfoId}}</td>
-          <td hidden>{{item.signIn}}</td>
-          <td ng-if="$odd" style="background-color:#f1f1f1">{{item.linkManName}}</td>
-          <td ng-if="$even">{{item.linkManName}}</td>
-          <td ng-if="$odd" style="background-color:#f1f1f1">{{activityT[item.activityType]}}</td>
-          <td ng-if="$even">{{activityT[item.activityType]}}</td>
-          <td ng-if="$odd" style="background-color:#f1f1f1">{{item.phoneNumber}}</td>
-          <td ng-if="$even">{{item.phoneNumber}}</td>
-          <td ng-if="$odd" style="background-color:#f1f1f1">{{item.reserveBegin | date:'MM/dd'}}</td>
-          <td ng-if="$even">{{item.reserveBegin | date:'MM/dd'}}</td>
-          <td ng-if="$odd" style="background-color:#f1f1f1">{{item.reserveEnd | date:'MM/dd'}}</td>
-          <td ng-if="$even">{{item.reserveEnd | date:'MM/dd'}}</td>
-          <td ng-if="$odd" style="background-color:#f1f1f1">
-            <button type="button" class="btn blue" ng-click="modify(item.reservationInfoId)">详情</button>
-          </td>
-          <td ng-if="$even">
-            <button type="button" class="btn blue" ng-click="modify(item.reservationInfoId)">详情</button>
-          </td>
-        </tr>
-      </table>
-      <button type="button" class="btn blue" ng-click="reserve()">预定</button>
-      <button type="button" class="btn blue" ng-click="allReservation()">所有活动</button>
-      <button type="button" class="btn gray" ng-click="logout()">退出</button>
+    <div class="header">
+      <div>
+        <a class="home" href="reservation.html" title="预约"><i></i></a>
+        <a class="more" href="reservationList.html" title="预约一览"><i></i></a>
+        <span id="lblTitle">预约记录一览</span>
+      </div>
+    </div>
+    <div>
+      <img class="header-image" src="img/hd-bg.jpeg">
+    </div>
+    <div class="middle">
+      <div ng-controller="reservationListController as reservationListVO" class="main" data-ng-init="load()">
+        <div>
+          <table class=table8_1 style="margin-top: 10px">
+            <tbody>
+              <tr>
+                <th style="background-color:#fcc80a">联系人</th>
+                <th style="background-color:#fcc80a">类型</th>
+                <th style="background-color:#fcc80a">电话</th>
+                <th style="background-color:#fcc80a">开始日</th>
+                <th style="background-color:#fcc80a">结束日</th>
+              </tr>
+              <tr ng-repeat="item in reservationListForm" ng-click="modify(item.reservationInfoId)">
+                <td hidden>{{item.reservationInfoId}}</td>
+                <td hidden>{{item.signIn}}</td>
+                <td ng-if="$odd" style="background-color:lightgray">{{item.linkManName}}</td>
+                <td ng-if="$even">{{item.linkManName}}</td>
+                <td ng-if="$odd" style="background-color:lightgray">{{activityT[item.activityType]}}</td>
+                <td ng-if="$even">{{activityT[item.activityType]}}</td>
+                <td ng-if="$odd" style="background-color:lightgray">{{item.phoneNumber}}</td>
+                <td ng-if="$even">{{item.phoneNumber}}</td>
+                <td ng-if="$odd" style="background-color:lightgray">{{item.reserveBegin | date:'MM/dd'}}</td>
+                <td ng-if="$even">{{item.reserveBegin | date:'MM/dd'}}</td>
+                <td ng-if="$odd" style="background-color:lightgray">{{item.reserveEnd | date:'MM/dd'}}</td>
+                <td ng-if="$even">{{item.reserveEnd | date:'MM/dd'}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="reserve()">预定</button>
+          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="allReservation()">所有活动</button>
+          <button type="button" class="button button-glow button-border button-rounded button-primary button-tiny" style="margin-bottom: 10px" ng-click="logout()">退出</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>

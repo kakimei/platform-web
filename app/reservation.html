@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="reservation" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0" />
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/button.css">
+    <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
+    <script>
+      var app = angular.module("reservation", []);
+      app.controller('reservationController', function ($scope, $http) {
+        $scope.reserveTeam = function () {
+          var hre = 'reserve.html?activityType=TEAM';
+          location.href = hre;
+        };
+
+        $scope.reserveSingle = function () {
+          var hre = 'reserve.html?activityType=SINGLE';
+          location.href = hre;
+        };
+      })
+    </script>
+    <title>预约导航</title>
+  </head>
+  <body>
+    <div class="header">
+      <div>
+        <a class="home" href="reservation.html" title="预约"><i></i></a>
+        <a class="more" href="reservationList.html" title="预约一览"><i></i></a>
+        <span id="lblTitle">预约导航</span>
+      </div>
+    </div>
+    <div>
+      <img class="header-image" src="img/hd-bg.jpeg">
+    </div>
+    <div class="middle">
+      <div class="bodytitle">
+        <div>
+          <label>欢迎使用杨浦滨江阅读建筑讲解预约系统</label>
+        </div>
+      </div>
+      <div ng-controller="reservationController" class="main2">
+        <div>
+          <div style="margin-top: 30px; margin-bottom: 20px">
+            <button class="button button-3d button-raised button-primary button-pill" ng-click="reserveTeam()">团队预约</button>
+          </div>
+          <div style="margin-top: 10px; margin-bottom: 500px">
+            <button class="button button-3d button-raised button-primary button-pill" ng-click="reserveSingle()">个人预约</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
