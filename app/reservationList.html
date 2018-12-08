@@ -30,7 +30,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/list?token=' + $cookies.get('token'),
+            url: 'http://127.0.0.1:8081/platform/reserve/list?token=' + $cookies.get('token'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -85,8 +85,8 @@
                 <th style="background-color:#fcc80a">联系人</th>
                 <th style="background-color:#fcc80a">类型</th>
                 <th style="background-color:#fcc80a">电话</th>
-                <th style="background-color:#fcc80a">开始日</th>
-                <th style="background-color:#fcc80a">结束日</th>
+                <th style="background-color:#fcc80a">预约日期</th>
+                <th style="background-color:#fcc80a">预约时间</th>
               </tr>
               <tr ng-repeat="item in reservationListForm" ng-click="modify(item.reservationInfoId)">
                 <td hidden>{{item.reservationInfoId}}</td>
@@ -97,10 +97,10 @@
                 <td ng-if="$even">{{activityT[item.activityType]}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.phoneNumber}}</td>
                 <td ng-if="$even">{{item.phoneNumber}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.reserveBegin | date:'MM/dd'}}</td>
-                <td ng-if="$even">{{item.reserveBegin | date:'MM/dd'}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.reserveEnd | date:'MM/dd'}}</td>
-                <td ng-if="$even">{{item.reserveEnd | date:'MM/dd'}}</td>
+                <td ng-if="$odd" style="background-color:lightgray">{{item.reserveDay | date:'MM/dd'}}</td>
+                <td ng-if="$even">{{item.reserveDay | date:'MM/dd'}}</td>
+                <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
+                <td ng-if="$even">{{item.timeString}}</td>
               </tr>
             </tbody>
           </table>

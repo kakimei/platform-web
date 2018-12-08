@@ -43,7 +43,7 @@
           $scope.reserveVO.reservationInfoId = urlValue;
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/modify?token=' + $cookies.get('token') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
+            url: 'http://127.0.0.1:8081/platform/reserve/modify?token=' + $cookies.get('token') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -57,8 +57,8 @@
               $scope.reserveVO.phoneNumber = resp.data.phoneNumber;
               $scope.reserveVO.peopleCount = resp.data.peopleCount;
               $scope.reserveVO.activityType = resp.data.activityType;
-              $scope.reserveVO.reserveBegin = new Date(resp.data.reserveBegin);
-              $scope.reserveVO.reserveEnd = new Date(resp.data.reserveEnd);
+              $scope.reserveVO.reserveDay = new Date(resp.data.reserveDay);
+              $scope.reserveVO.timeString = resp.data.timeString;
               $scope.reserveVO.signIn = resp.data.signIn;
               var now = $filter("date")(new Date(), "yyyyMMdd");
               var startDate = $filter("date")($scope.reserveVO.reserveBegin, "yyyyMMdd");
@@ -81,7 +81,7 @@
         $scope.signin = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/signin?token=' + $cookies.get('token'),
+            url: 'http://127.0.0.1:8081/platform/reserve/signin?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -105,7 +105,7 @@
         $scope.cancel = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/cancel?token=' + $cookies.get('token'),
+            url: 'http://127.0.0.1:8081/platform/reserve/cancel?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -129,15 +129,15 @@
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve?token=' + $cookies.get('token'),
+            url: 'http://127.0.0.1:8081/platform/reserve?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId,
               "linkManName": $scope.reserveVO.linkManName,
               "sex": $scope.reserveVO.sex,
               "age": $scope.reserveVO.age,
               "phoneNumber": $scope.reserveVO.phoneNumber,
-              "reserveBegin": $scope.reserveVO.reserveBegin,
-              "reserveEnd": $scope.reserveVO.reserveEnd,
+              "reserveDay": $scope.reserveVO.reserveDay,
+              "timeString": $scope.reserveVO.timeString,
               "peopleCount": $scope.reserveVO.peopleCount,
               "activityType": $scope.reserveVO.activityType
             },
@@ -198,10 +198,10 @@
               <label>电话号码:</label><input type="text" ng-maxlength="15" string-to-number ng-model="reserveVO.phoneNumber" readonly  unselectable="on" />
             </div>
             <div class="int">
-              <label>预约开始日期:</label><input type="date" ng-model="reserveVO.reserveBegin" readonly  unselectable="on" />
+              <label>预约日期:</label><input type="date" ng-model="reserveVO.reserveDay" readonly  unselectable="on" />
             </div>
             <div class="int">
-              <label>预约结束日期:</label><input type="date" ng-model="reserveVO.reserveEnd" readonly  unselectable="on" />
+              <label>预约时间段:</label><input type="text" ng-model="reserveVO.timeString" readonly  unselectable="on" />
             </div>
             <div class="int">
               <label>预约人数:</label><input type="number" ng-maxlength="4" ng-model="reserveVO.peopleCount" readonly  unselectable="on" />

@@ -23,31 +23,42 @@
         height: 30px;
       }
 
+      .int select {
+        padding: 1px 1px;
+        border: 1px solid #ccc;
+        height: 30px;
+      }
+
     </style>
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
     <script>
       var app = angular.module("reserve", ['ngCookies']);
-      app.controller('reserveController', function ($cookies, $scope, $http, $location) {
+      app.controller('reserveController', function ($cookies, $scope, $http, $filter) {
         $scope.reserveVO.linkManName = "";
         $scope.reserveVO.sex = "MALE";
         $scope.reserveVO.age = "";
         $scope.reserveVO.phoneNumber = "";
         $scope.reserveVO.peopleCount = "";
         $scope.reserveVO.activityType = "TEAM";
+        $scope.reserveVO.reserveDay = "";
+        $scope.reserveVO.timeString = "";
         $scope.peopleRangePlaceHolder = "";
+        $scope.dateTimeList = "";
+        $scope.dateList = new Array();
+        $scope.validtime = "";
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve?token=' + $cookies.get('token'),
+            url: 'http://127.0.0.1:8081/platform/reserve?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": null,
               "linkManName": $scope.reserveVO.linkManName,
               "sex": $scope.reserveVO.sex,
               "age": $scope.reserveVO.age,
               "phoneNumber": $scope.reserveVO.phoneNumber,
-              "reserveBegin": $scope.reserveVO.reserveBegin,
-              "reserveEnd": $scope.reserveVO.reserveEnd,
+              "reserveDay": $scope.reserveVO.reserveDay,
+              "timeString" : $scope.reserveVO.timeString,
               "peopleCount": $scope.reserveVO.peopleCount,
               "activityType": $scope.reserveVO.activityType
             },
@@ -78,30 +89,59 @@
           var href = location.href;
           var activityTypeValue = href.substr(href.indexOf("=") + 1);
           $scope.reserveVO.activityType = activityTypeValue;
-          if($scope.reserveVO.activityType == "TEAM"){
+          if ($scope.reserveVO.activityType == "TEAM") {
             $scope.peopleRangePlaceHolder = '团队预约 > 10人';
             $scope.minPeople = 11;
             $scope.maxPeople = 100;
-          }else {
+          } else {
             $scope.peopleRangePlaceHolder = '个人预约 <= 10人';
             $scope.minPeople = 1;
             $scope.maxPeople = 10;
           }
 
-          var mindate = new Date();
-          mindate.setDate(mindate.getDate() + 1);
-          $scope.minDate = mindate
+          $http({
+            method: 'GET',
+            url: 'http://127.0.0.1:8081/platform/reserve/validDateTime?token=' + $cookies.get('token'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            $scope.dateTimeList = resp.data;
+            for(var i = 0; i < $scope.dateTimeList.length; i++){
+              var dateTime = $scope.dateTimeList[i];
+              for(var key in dateTime){
+                $scope.dateList.push(key);
+              }
+            }
+          }, function (resp) {
+            alert("预约失败！服务调用失败！跳转到登录页面");
+            self.location = 'login.html';
+          });
+
         };
 
-        $scope.changeActivityType  = function () {
-          if($scope.reserveVO.activityType == "TEAM"){
+        $scope.changeActivityType = function () {
+          if ($scope.reserveVO.activityType == "TEAM") {
             $scope.peopleRangePlaceHolder = '团队预约 > 10人';
             $scope.minPeople = 11;
             $scope.maxPeople = 100;
-          }else {
+          } else {
             $scope.peopleRangePlaceHolder = '个人预约 <= 10人';
             $scope.minPeople = 1;
             $scope.maxPeople = 10;
+          }
+        };
+
+        $scope.changeReserveDate = function () {
+          for (var datejson in $scope.dateTimeList) {
+            for (var key in $scope.dateTimeList[datejson]) {
+              var date = $filter('date')($scope.reserveVO.reserveDay, 'yyyy-MM-dd');
+              var keyD = $filter('date')(new Date(key), 'yyyy-MM-dd');
+              if (keyD == date) {
+                $scope.validtime = $scope.dateTimeList[datejson][key];
+              }
+            }
           }
         }
       });
@@ -140,7 +180,8 @@
               </div>
             </div>
             <div class="int">
-              <label>电话号码:</label><input name="tel1" placeholder="请输入手机号码" ng-pattern="/^1[3|5][0-9]\d{4,8}$/" type="tel" ng-minlength="11" ng-maxlength="15" ng-model="reserveVO.phoneNumber" required />
+              <label>电话号码:</label><input name="tel1" placeholder="请输入手机号码" ng-pattern="/^1[3|5][0-9]\d{4,8}$/" type="tel" ng-minlength="11"
+                                         ng-maxlength="15" ng-model="reserveVO.phoneNumber" required />
               <div class="col-xs-12">
                 <p class="glyphicon glyphicon-ok input_result text-success"
                    ng-if="rForm.tel1.$valid"></p>
@@ -151,13 +192,25 @@
               </div>
             </div>
             <div class="int">
-              <label>预约开始日期:</label><input type="date" min="{{minDate | date:'yyyy-MM-dd'}}" max="{{reserveVO.reserveEnd | date:'yyyy-MM-dd'}}" ng-model="reserveVO.reserveBegin" required />
+              <label>预约日期:</label>
+              <select ng-model="reserveVO.reserveDay" ng-change="changeReserveDate()" required>
+                <option value="" disabled selected>请选择日期</option>
+                <option ng-repeat="d in dateList" value="{{d}}">{{d | date:'yyyy-MM-dd'}}
+                </option>
+              </select>
             </div>
             <div class="int">
-              <label>预约结束日期:</label><input type="date" min="{{reserveVO.reserveBegin | date:'yyyy-MM-dd'}}" ng-model="reserveVO.reserveEnd" required />
+              <label>预约时间段:</label>
+              <select ng-model="reserveVO.timeString" required>
+                <option value="" disabled selected>请选择时间段</option>
+                <option ng-repeat="t in validtime" value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute}}">{{t.beginHour
+                  + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute}}
+                </option>
+              </select>
             </div>
             <div class="int">
-              <label>预约人数:</label><input name="peopleCount1" placeholder={{peopleRangePlaceHolder}} type="number" min="{{minPeople}}" max="{{maxPeople}}" ng-model="reserveVO.peopleCount" style="width: 120px"; required />
+              <label>预约人数:</label><input name="peopleCount1" placeholder={{peopleRangePlaceHolder}} type="number" min="{{minPeople}}"
+                                         max="{{maxPeople}}" ng-model="reserveVO.peopleCount" style="width: 120px" ; required />
               <div class="col-xs-12">
                 <p class="text-danger glyphicon glyphicon-remove"
                    ng-if="(rForm.peopleCount1.$error.max||rForm.peopleCount1.$error.min)&&rForm.peopleCount1.$touched">请输入有效人数!</p>
@@ -165,11 +218,13 @@
             </div>
             <div class="int">
               <label>预约类型:</label>
-              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" ng-change="changeActivityType()"/>团队
-              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" ng-change="changeActivityType()"/>个人
+              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" ng-change="changeActivityType()" />团队
+              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" ng-change="changeActivityType()" />个人
             </div>
             <button type="submit" class="button button-glow button-rounded button-raised button-primary" style="margin-bottom: 10px">预约</button>
-            <button type="button" class="button button-glow button-border button-rounded button-primary" style="margin-bottom: 10px" ng-click="logout()">退出</button>
+            <button type="button" class="button button-glow button-border button-rounded button-primary" style="margin-bottom: 10px"
+                    ng-click="logout()">退出
+            </button>
           </form>
         </div>
       </div>

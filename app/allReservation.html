@@ -24,7 +24,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/alllist?token=' + $cookies.get('token'),
+            url: 'http://127.0.0.1:8081/platform/reserve/alllist?token=' + $cookies.get('token'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -41,21 +41,23 @@
           self.location = 'reservationList.html';
         };
 
-        $scope.feedback = function (reservationInfoId) {
+        $scope.singin = function (reservationInfoId) {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/feedback/thumbsUp?token=' + $cookies.get('token'),
+            url: 'http://127.0.0.1:8081/platform/sign?token=' + $cookies.get('token'),
             data: {
-              "reservationInfoId": reservationInfoId,
-              "feedBackType": "GOOD"
+              "reservationInfoId": reservationInfoId
             },
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            if (resp.data) {
+            if (resp.data == true) {
+              alert("签到成功！");
               $scope.load();
+            } else {
+              alert("签到失败！");
             }
           }, function (resp) {
             alert("获取列表失败！服务调用失败！");
@@ -92,10 +94,9 @@
             <tr>
               <th style="background-color:#fcc80a">联系人</th>
               <th style="background-color:#fcc80a">类型</th>
-              <th style="background-color:#fcc80a">开始日</th>
-              <th style="background-color:#fcc80a">结束日</th>
-              <th style="background-color:#fcc80a">人气</th>
-              <th style="background-color:#fcc80a"></th>
+              <th style="background-color:#fcc80a">预定日期</th>
+              <th style="background-color:#fcc80a">预定时间</th>
+              <th style="background-color:#fcc80a">签到</th>
             </tr>
             <tr ng-repeat="item in reservationListForm">
               <td hidden>{{item.reservationInfoId}}</td>
@@ -104,17 +105,21 @@
               <td ng-if="$even">{{item.linkManName}}</td>
               <td ng-if="$odd" style="background-color:lightgray">{{activityT[item.activityType]}}</td>
               <td ng-if="$even">{{activityT[item.activityType]}}</td>
-              <td ng-if="$odd" style="background-color:lightgray">{{item.reserveBegin | date:'MM/dd'}}</td>
-              <td ng-if="$even">{{item.reserveBegin | date:'MM/dd'}}</td>
-              <td ng-if="$odd" style="background-color:lightgray">{{item.reserveEnd | date:'MM/dd'}}</td>
-              <td ng-if="$even">{{item.reserveEnd | date:'MM/dd'}}</td>
-              <td ng-if="$odd" style="background-color:lightgray">{{item.feedBack}}</td>
-              <td ng-if="$even">{{item.feedBack}}</td>
-              <td ng-if="$odd" style="background-color:lightgray">
-                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="feedback(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button>
+              <td ng-if="$odd" style="background-color:lightgray">{{item.reserveDay | date:'MM/dd'}}</td>
+              <td ng-if="$even">{{item.reserveDay | date:'MM/dd'}}</td>
+              <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
+              <td ng-if="$even">{{item.timeString}}</td>
+              <td ng-if="$odd && item.hasSigned" style="background-color:lightgray">
+                <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled" ng-click="singin(item.reservationInfoId)">签</button>
               </td>
-              <td ng-if="$even">
-                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="feedback(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button>
+              <td ng-if="$odd && !item.hasSigned" style="background-color:lightgray">
+                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="singin(item.reservationInfoId)">签</button>
+              </td>
+              <td ng-if="$even && item.hasSigned">
+                <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled" ng-click="singin(item.reservationInfoId)">签</button>
+              </td>
+              <td ng-if="$even && !item.hasSigned">
+                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="singin(item.reservationInfoId)">签</button>
               </td>
             </tr>
           </table>
