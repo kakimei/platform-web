@@ -54,12 +54,56 @@ body {
   height: 40px;
 }
 
-.header > div > a.more > i {
+.header > div > dl.more {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.header > div > dl.more > dt {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.header > div > dl.more > dt > i {
+  cursor: pointer;
   display: block;
-  background: url(../img/ico.png) -40px 0 no-repeat;
+  background: url(../img/ico.png) -100px 0 no-repeat;
   width: 20px;
   height: 20px;
   margin: 10px;
+}
+
+.header > div > dl.more > dd {
+  display: none;
+  position: absolute;
+  top: 39px;
+  left: -57px;
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 75px;
+  line-height: 30px;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid #4F91AA;
+}
+
+.header > div > dl.more > dd > span {
+  display: block;
+  line-height: 1em;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.header > div > dl.more > dd > a {
+  display: block;
+  color: #4F91AA;
+  text-decoration: none;
+  font-size: 15px;
 }
 
 .header > div > span {
@@ -72,7 +116,6 @@ body {
 }
 
 .header-image {
-  z-index: 10000;
   position: relative;
   width: 100%;
   height: 100px;
@@ -103,7 +146,7 @@ body {
   line-height: 40px;
 
   background-color: whitesmoke;
-  box-shadow:0 0 10px deepskyblue inset;
+  box-shadow: 0 0 10px deepskyblue inset;
 }
 
 .main2 {
@@ -121,7 +164,7 @@ body {
   line-height: 40px;
 
   background: url("../img/bg-in.jpeg");
-  box-shadow:0 0 10px deepskyblue inset;
+  box-shadow: 0 0 10px deepskyblue inset;
 }
 
 .btn.blue {
@@ -140,33 +183,36 @@ body {
 }
 
 .table8_1 table {
-  width:100%;
-  margin:15px 0
+  width: 100%;
+  margin: 15px 0
 }
+
 .table8_1 th {
-  background-color:#96A5FF;
-  background:-o-linear-gradient(90deg, #96A5FF, #c3cbfe);
-  background:-moz-linear-gradient( center top, #96A5FF 5%, #c3cbfe 100% );
-  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #96A5FF), color-stop(1, #c3cbfe) );
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#96A5FF', endColorstr='#c3cbfe');
-  color:#FFFFFF
+  background-color: #96A5FF;
+  background: -o-linear-gradient(90deg, #96A5FF, #c3cbfe);
+  background: -moz-linear-gradient(center top, #96A5FF 5%, #c3cbfe 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #96A5FF), color-stop(1, #c3cbfe));
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#96A5FF', endColorstr='#c3cbfe');
+  color: #FFFFFF
 }
-.table8_1,.table8_1 th,.table8_1 td
-{
-  font-size:0.95em;
-  text-align:center;
-  padding:4px;
-  border:1px solid #efefef;
-  border-collapse:collapse
+
+.table8_1, .table8_1 th, .table8_1 td {
+  font-size: 0.95em;
+  text-align: center;
+  padding: 4px;
+  border: 1px solid #efefef;
+  border-collapse: collapse
 }
-.table8_1 tr:nth-child(odd){
-  background-color:#dce1fe;
-  background:-o-linear-gradient(90deg, #dce1fe, #f8f9fe);
-  background:-moz-linear-gradient( center top, #dce1fe 5%, #f8f9fe 100% );
-  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dce1fe), color-stop(1, #f8f9fe) );
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dce1fe', endColorstr='#f8f9fe');
+
+.table8_1 tr:nth-child(odd) {
+  background-color: #dce1fe;
+  background: -o-linear-gradient(90deg, #dce1fe, #f8f9fe);
+  background: -moz-linear-gradient(center top, #dce1fe 5%, #f8f9fe 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dce1fe), color-stop(1, #f8f9fe));
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dce1fe', endColorstr='#f8f9fe');
 }
-.table8_1 tr:nth-child(even){
-  background-color:#fdfdfd;
+
+.table8_1 tr:nth-child(even) {
+  background-color: #fdfdfd;
 }
 

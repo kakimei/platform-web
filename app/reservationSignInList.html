@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/button.css">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
       table, td {
         border: 1px solid grey;
@@ -44,7 +45,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://127.0.0.1:8081/platform/reserve/list?token=' + $cookies.get('token'),
+            url: 'http://127.0.0.1:8081/platform/reserve/mySignInlist?token=' + $cookies.get('token'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -59,10 +60,6 @@
         $scope.reserve = function () {
           self.location = 'reserve.html';
         };
-        $scope.modify = function (reservationId) {
-          var hre = 'reservationModify.html?reservationInfoId=' + reservationId;
-          location.href = hre;
-        };
 
         $scope.allReservation = function () {
           var hre = 'allReservation.html';
@@ -74,16 +71,35 @@
           $cookies.put("token", null);
           location.href = 'login.html';
         };
+
+        $scope.thumbsUp = function (reservationInfoId) {
+          $http({
+            method: 'POST',
+            url: 'http://127.0.0.1:8081/platform/feedback/thumbsUp?token=' + $cookies.get('token'),
+            data: {
+              "reservationInfoId": reservationInfoId
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            $scope.load();
+          }, function (resp) {
+            alert("获取列表失败！服务调用失败！");
+            self.location = 'login.html';
+          });
+        }
       });
 
     </script>
-    <title>预约记录一览</title>
+    <title>参与的预约</title>
   </head>
   <body>
     <div class="header">
       <div id="header">
         <a class="home" href="reservation.html" title="预约"><i></i></a>
-        <span id="lblTitle">预约记录一览</span>
+        <span id="lblTitle">参与的预约</span>
         <dl class="more" title="预约一览">
           <dt><i></i></dt>
           <dd>
@@ -105,10 +121,11 @@
                 <th style="background-color:#fcc80a">联系人</th>
                 <th style="background-color:#fcc80a">类型</th>
                 <th style="background-color:#fcc80a">电话</th>
-                <th style="background-color:#fcc80a">预约日期</th>
-                <th style="background-color:#fcc80a">预约时间</th>
+                <th style="background-color:#fcc80a">日期</th>
+                <th style="background-color:#fcc80a">时间</th>
+                <th style="background-color:#fcc80a"></th>
               </tr>
-              <tr ng-repeat="item in reservationListForm" ng-click="modify(item.reservationInfoId)">
+              <tr ng-repeat="item in reservationListForm">
                 <td hidden>{{item.reservationInfoId}}</td>
                 <td hidden>{{item.signIn}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.linkManName}}</td>
@@ -121,6 +138,18 @@
                 <td ng-if="$even">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
                 <td ng-if="$even">{{item.timeString}}</td>
+                <td ng-if="$odd && item.hasFeedback" style="background-color:lightgray">
+                  <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled" ng-click="thumbsUp(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button>
+                </td>
+                <td ng-if="$odd && !item.hasFeedback" style="background-color:lightgray">
+                  <button class="button button-3d button-box button-jumbo button-tiny" ng-click="thumbsUp(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button>
+                </td>
+                <td ng-if="$even && item.hasFeedback">
+                  <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled" ng-click="thumbsUp(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button>
+                </td>
+                <td ng-if="$even && !item.hasFeedback">
+                  <button class="button button-3d button-box button-jumbo button-tiny" ng-click="thumbsUp(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button>
+                </td>
               </tr>
             </tbody>
           </table>

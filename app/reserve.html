@@ -2,9 +2,8 @@
 <html ng-app="reserve" lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/default.css">
-    <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css'>
     <link rel="stylesheet" href="css/button.css">
     <style>
       form div {
@@ -32,7 +31,21 @@
     </style>
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
+    <script src="css/jquery.min.js"></script>
     <script>
+      $(function () {
+        if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
+          $('#header>a.home').show();
+        }
+        $('#header>dl.more>dt').click(function () {
+          var $obj = $(this).parent().find('dd');
+          $obj.show();
+          setTimeout(function () {
+            $obj.hide();
+          }, 3000);
+        });
+      });
+
       var app = angular.module("reserve", ['ngCookies']);
       app.controller('reserveController', function ($cookies, $scope, $http, $filter) {
         $scope.reserveVO.linkManName = "";
@@ -150,10 +163,16 @@
   </head>
   <body>
     <div class="header">
-      <div>
+      <div id="header">
         <a class="home" href="reservation.html" title="预约"><i></i></a>
-        <a class="more" href="reservationList.html" title="预约一览"><i></i></a>
         <span id="lblTitle">预约系统</span>
+        <dl class="more" title="预约一览">
+          <dt><i></i></dt>
+          <dd>
+            <a href="http://127.0.0.1:8000/app/reservationList.html">预约查询</a>
+            <a href="http://127.0.0.1:8000/app/reservationSignInList.html">参与的预约</a>
+          </dd>
+        </dl>
       </div>
     </div>
     <div>
