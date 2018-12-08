@@ -75,7 +75,7 @@
               $scope.reserveVO.timeString = resp.data.timeString;
               $scope.reserveVO.signIn = resp.data.signIn;
               var now = $filter("date")(new Date(), "yyyyMMdd");
-              var startDate = $filter("date")($scope.reserveVO.reserveBegin, "yyyyMMdd");
+              var startDate = $filter("date")($scope.reserveVO.reserveDay, "yyyyMMdd");
               $scope.canModify = startDate > now;
               $scope.canSignin = startDate <= now && !$scope.reserveVO.signIn;
             } else {
