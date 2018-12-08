@@ -38,7 +38,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://127.0.0.1:8081/platform/reserve/alllist?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com:8081/platform/reserve/alllist?token=' + $cookies.get('token'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -58,7 +58,7 @@
         $scope.singin = function (reservationInfoId) {
           $http({
             method: 'POST',
-            url: 'http://127.0.0.1:8081/platform/sign?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com:8081/platform/sign?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": reservationInfoId
             },

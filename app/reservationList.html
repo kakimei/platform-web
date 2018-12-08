@@ -44,7 +44,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://127.0.0.1:8081/platform/reserve/list?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com:8081/platform/reserve/list?token=' + $cookies.get('token'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
