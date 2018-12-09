@@ -71,7 +71,7 @@
               "age": $scope.reserveVO.age,
               "phoneNumber": $scope.reserveVO.phoneNumber,
               "reserveDay": $scope.reserveVO.reserveDay,
-              "timeString" : $scope.reserveVO.timeString,
+              "timeString": $scope.reserveVO.timeString,
               "peopleCount": $scope.reserveVO.peopleCount,
               "activityType": $scope.reserveVO.activityType
             },
@@ -121,9 +121,9 @@
             }
           }).then(function (resp) {
             $scope.dateTimeList = resp.data;
-            for(var i = 0; i < $scope.dateTimeList.length; i++){
+            for (var i = 0; i < $scope.dateTimeList.length; i++) {
               var dateTime = $scope.dateTimeList[i];
-              for(var key in dateTime){
+              for (var key in dateTime) {
                 $scope.dateList.push(key);
               }
             }
@@ -156,6 +156,31 @@
               }
             }
           }
+        };
+
+        $scope.timeFormatString = function (hourBegin, minuteBegin, hourEnd, minuteEnd) {
+          var result = "";
+          if (String(hourBegin).length == 1) {
+            result = result + "0" + hourBegin;
+          } else {
+            result = result + hourBegin;
+          }
+          if (String(minuteBegin).length == 1) {
+            result = result + ":0" + minuteBegin;
+          } else {
+            result = result + ":" + minuteBegin;
+          }
+          if (String(hourEnd).length == 1) {
+            result = result + " ~ 0" + hourEnd;
+          } else {
+            result = result + " ~ " + hourEnd;
+          }
+          if (String(minuteEnd).length == 1) {
+            result = result + ":0" + minuteEnd;
+          } else {
+            result = result + ":" + minuteEnd;
+          }
+          return result;
         }
       });
     </script>
@@ -222,8 +247,8 @@
               <label>预约时间段:</label>
               <select ng-model="reserveVO.timeString" required>
                 <option value="" disabled selected>请选择时间段</option>
-                <option ng-repeat="t in validtime" value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute}}">{{t.beginHour
-                  + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute}}
+                <option ng-repeat="t in validtime" value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute}}">
+                  {{timeFormatString(t.beginHour, t.beginMinute, t.endHour, t.endMinute)}}
                 </option>
               </select>
             </div>
