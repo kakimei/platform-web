@@ -57,7 +57,7 @@
           $scope.reserveVO.reservationInfoId = urlValue;
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/modify?token=' + $cookies.get('token') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
+            url: 'http://yp.compass-trip.com/platform/reserve/modify?token=' + $cookies.get('token') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -95,7 +95,7 @@
         $scope.signin = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/signin?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve/signin?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -119,7 +119,7 @@
         $scope.cancel = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve/cancel?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve/cancel?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -143,7 +143,7 @@
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com:8081/platform/reserve?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId,
               "linkManName": $scope.reserveVO.linkManName,
