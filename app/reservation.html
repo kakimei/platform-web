@@ -36,7 +36,7 @@
 
         $scope.load = function () {
           var code = $scope.getQueryString("code");
-          // alert(code);
+          alert(code);
           $http({
             method: 'GET',
             url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx22d16b90c898f61d&secret=SECRET&code='+code+'&grant_type=authorization_code',
