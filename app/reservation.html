@@ -35,15 +35,14 @@
         };
 
         $scope.load = function () {
-          var href = location.href;
-          alert(href);
           var code = $scope.getQueryString("code");
           alert(code);
         };
 
         $scope.getQueryString = function (name) {
+          var href = location.href.substr(location.href.indexOf("?") + 1);
           var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-          var r = location.href.match(reg);
+          var r = href.match(reg);
           if (r != null) {
             return unescape(r[2]);
           }
