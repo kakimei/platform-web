@@ -33,6 +33,11 @@
           var hre = 'reserve.html?activityType=SINGLE';
           location.href = hre;
         };
+
+        $scope.load = function () {
+          var href = location.href;
+          alert(href);
+        }
       })
     </script>
     <title>预约导航</title>
@@ -60,7 +65,7 @@
           <label>欢迎使用杨浦滨江阅读建筑讲解预约系统</label>
         </div>
       </div>
-      <div ng-controller="reservationController" class="main2">
+      <div ng-controller="reservationController" class="main2" data-ng-init="load()">
         <div>
           <div style="margin-top: 30px; margin-bottom: 20px">
             <button class="button button-3d button-raised button-primary button-pill" ng-click="reserveTeam()">团队预约</button>
