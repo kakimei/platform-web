@@ -37,14 +37,13 @@
         $scope.load = function () {
           var href = location.href;
           alert(href);
-          var code = getQueryString("code");
+          var code = $scope.getQueryString("code");
           alert(code);
         };
 
         $scope.getQueryString = function (name) {
-          alert(location.href);
           var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-          var r = window.location.search.substr(1).match(reg);
+          var r = location.href.match(reg);
           if (r != null) {
             return unescape(r[2]);
           }
