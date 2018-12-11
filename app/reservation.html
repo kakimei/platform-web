@@ -37,24 +37,20 @@
         $scope.load = function () {
           var code = $scope.getQueryString("code");
           alert(code);
-          // $http({
-          //   method: 'GET',
-          //   url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx22d16b90c898f61d&secret=ebf24940e789946ef53b05a70391c95b&code='+code+'&grant_type=authorization_code',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //     'Accept': 'application/json'
-          //   }
-          // }).then(function (resp) {
-          //   alert(resp.data)
-          //   if (resp.data != null) {
-          //
-          //   } else {
-          //     alert("不可修改！重新登录");
-          //     self.location = 'login.html';
-          //   }
-          // }, function (resp) {
-          //   alert("修改失败！服务调用失败！跳转到登录页面");
-          // });
+          $http({
+            method: 'GET',
+            url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx22d16b90c898f61d&secret=ebf24940e789946ef53b05a70391c95b&code='+code+'&grant_type=authorization_code'
+          }).then(function (resp) {
+            alert(resp.data)
+            if (resp.data != null) {
+
+            } else {
+              alert("不可修改！重新登录");
+              self.location = 'login.html';
+            }
+          }, function (resp) {
+            alert("修改失败！服务调用失败！跳转到登录页面");
+          });
         };
 
         $scope.getQueryString = function (name) {
