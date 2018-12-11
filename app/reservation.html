@@ -47,7 +47,7 @@
           }).then(function (resp) {
             if (resp.data != null) {
               $scope.openId = resp.data.openid;
-              $scope.registerAndlogin();
+              $scope.registerAndLogin();
             } else {
               alert("登录失败");
             }
@@ -56,7 +56,7 @@
           });
         };
 
-        $scope.registerAndlogin = function () {
+        $scope.registerAndLogin = function () {
           $http({
             method: 'POST',
             url: 'http://yp.compass-trip.com/platform/user/login',
