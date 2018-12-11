@@ -45,12 +45,11 @@
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            alert(resp.data)
             if (resp.data != null) {
-
+              alert(resp.data.nickname);
+              alert(resp.data.openid);
             } else {
-              alert("不可修改！重新登录");
-              self.location = 'login.html';
+              alert("登录失败");
             }
           }, function (resp) {
             alert("修改失败！服务调用失败！跳转到登录页面");
