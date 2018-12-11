@@ -37,7 +37,7 @@
         $scope.loginForm = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/user/login',
+            url: 'http://localhost:8081/platform/user/login',
             data: {
               "userName": $scope.loginVO.userName,
               "password": $scope.loginVO.password

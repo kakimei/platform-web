@@ -56,14 +56,15 @@
         $scope.reserveVO.activityType = "TEAM";
         $scope.reserveVO.reserveDay = "";
         $scope.reserveVO.timeString = "";
-        $scope.peopleRangePlaceHolder = "";
         $scope.dateTimeList = "";
         $scope.dateList = new Array();
         $scope.validtime = "";
+        $scope.validPeopleRange = new Array();
         $scope.reserveForm = function () {
+          var ts = $scope.reserveVO.timeString.substr(0, $scope.reserveVO.timeString.indexOf("times:"));
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/reserve?token=' + $cookies.get('token'),
+            url: 'http://localhost:8081/platform/reserve?token=' + $cookies.get('token'),
             data: {
               "reservationInfoId": null,
               "linkManName": $scope.reserveVO.linkManName,
@@ -71,7 +72,7 @@
               "age": $scope.reserveVO.age,
               "phoneNumber": $scope.reserveVO.phoneNumber,
               "reserveDay": $scope.reserveVO.reserveDay,
-              "timeString": $scope.reserveVO.timeString,
+              "timeString": ts,
               "peopleCount": $scope.reserveVO.peopleCount,
               "activityType": $scope.reserveVO.activityType
             },
@@ -102,19 +103,16 @@
           var href = location.href;
           var activityTypeValue = href.substr(href.indexOf("=") + 1);
           $scope.reserveVO.activityType = activityTypeValue;
+          var url = '';
           if ($scope.reserveVO.activityType == "TEAM") {
-            $scope.peopleRangePlaceHolder = '团队预约 > 10人';
-            $scope.minPeople = 11;
-            $scope.maxPeople = 100;
+            url = 'http://localhost:8081/platform/reserve/team/validDateTime?token=' + $cookies.get('token');
           } else {
-            $scope.peopleRangePlaceHolder = '个人预约 <= 10人';
-            $scope.minPeople = 1;
-            $scope.maxPeople = 10;
+            url = 'http://localhost:8081/platform/reserve/single/validDateTime?token=' + $cookies.get('token');
           }
 
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/reserve/validDateTime?token=' + $cookies.get('token'),
+            url: url,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -134,18 +132,6 @@
 
         };
 
-        $scope.changeActivityType = function () {
-          if ($scope.reserveVO.activityType == "TEAM") {
-            $scope.peopleRangePlaceHolder = '团队预约 > 10人';
-            $scope.minPeople = 11;
-            $scope.maxPeople = 100;
-          } else {
-            $scope.peopleRangePlaceHolder = '个人预约 <= 10人';
-            $scope.minPeople = 1;
-            $scope.maxPeople = 10;
-          }
-        };
-
         $scope.changeReserveDate = function () {
           for (var datejson in $scope.dateTimeList) {
             for (var key in $scope.dateTimeList[datejson]) {
@@ -155,6 +141,17 @@
                 $scope.validtime = $scope.dateTimeList[datejson][key];
               }
             }
+          }
+        };
+
+        $scope.changeReserveTime = function () {
+          if($scope.reserveVO.activityType == "TEAM"){
+            return;
+          }
+          var timeString = $scope.reserveVO.timeString;
+          var peopleRange = timeString.substr(timeString.indexOf("times:") + 6);
+          for(var i =1; i <= peopleRange; i++ ){
+            $scope.validPeopleRange.push(i);
           }
         };
 
@@ -245,25 +242,26 @@
             </div>
             <div class="int">
               <label>预约时间段:</label>
-              <select ng-model="reserveVO.timeString" required>
+              <select ng-model="reserveVO.timeString" ng-change="changeReserveTime()" required>
                 <option value="" disabled selected>请选择时间段</option>
-                <option ng-repeat="t in validtime" value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute}}">
+                <option ng-repeat="t in validtime" value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute + 'times:' + t.times}}">
                   {{timeFormatString(t.beginHour, t.beginMinute, t.endHour, t.endMinute)}}
                 </option>
               </select>
             </div>
             <div class="int">
-              <label>预约人数:</label><input name="peopleCount1" placeholder={{peopleRangePlaceHolder}} type="number" min="{{minPeople}}"
-                                         max="{{maxPeople}}" ng-model="reserveVO.peopleCount" style="width: 120px" ; required />
-              <div class="col-xs-12">
-                <p class="text-danger glyphicon glyphicon-remove"
-                   ng-if="(rForm.peopleCount1.$error.max||rForm.peopleCount1.$error.min)&&rForm.peopleCount1.$touched">请输入有效人数!</p>
-              </div>
+              <label>预约人数:</label>
+              <select ng-model="reserveVO.peopleCount" required>
+                <option value="" disabled selected>请选择人数</option>
+                <option ng-repeat="t in validPeopleRange" value="{{t}}">
+                  {{t}}
+                </option>
+              </select>
             </div>
             <div class="int">
               <label>预约类型:</label>
-              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" ng-change="changeActivityType()" />团队
-              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" ng-change="changeActivityType()" />个人
+              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" disabled/>团队
+              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled/>个人
             </div>
             <button type="submit" class="button button-glow button-rounded button-raised button-primary" style="margin-bottom: 10px">预约</button>
             <button type="button" class="button button-glow button-border button-rounded button-primary" style="margin-bottom: 10px"

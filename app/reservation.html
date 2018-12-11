@@ -36,7 +36,7 @@
 
         $scope.load = function () {
           var code = $scope.getQueryString("code");
-          alert(code);
+          // to do SECRET 需要替代掉
           $http({
             method: 'GET',
             url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx22d16b90c898f61d&secret=SECRET&code='+code+'&grant_type=authorization_code',
@@ -93,7 +93,7 @@
           <label>欢迎使用杨浦滨江阅读建筑讲解预约系统</label>
         </div>
       </div>
-      <div ng-controller="reservationController" class="main2" data-ng-init="load()">
+      <div ng-controller="reservationController" class="main2">
         <div>
           <div style="margin-top: 30px; margin-bottom: 20px">
             <button class="button button-3d button-raised button-primary button-pill" ng-click="reserveTeam()">团队预约</button>

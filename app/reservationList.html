@@ -44,7 +44,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/reserve/list?token=' + $cookies.get('token'),
+            url: 'http://localhost:8081/platform/reserve/list?token=' + $cookies.get('token'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -57,7 +57,7 @@
           });
         };
         $scope.reserve = function () {
-          self.location = 'reserve.html';
+          self.location = 'reservation.html';
         };
         $scope.modify = function (reservationId) {
           var hre = 'reservationModify.html?reservationInfoId=' + reservationId;
