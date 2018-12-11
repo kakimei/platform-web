@@ -24,6 +24,7 @@
 
       var app = angular.module("reservation", []);
       app.controller('reservationController', function ($scope, $http) {
+        $scope.openId = "";
         $scope.reserveTeam = function () {
           var hre = 'reserve.html?activityType=TEAM';
           location.href = hre;
@@ -36,7 +37,6 @@
 
         $scope.load = function () {
           var code = $scope.getQueryString("code");
-          alert(code);
           $http({
             method: 'GET',
             url: 'http://yp.compass-trip.com/platform/weixin/userInfo/get?code='+code,
@@ -46,12 +46,38 @@
             }
           }).then(function (resp) {
             if (resp.data != null) {
-              alert(resp.data.openid);
+              $scope.openId = resp.data.openid;
+              $scope.registerAndlogin();
             } else {
               alert("登录失败");
             }
           }, function (resp) {
             alert("修改失败！服务调用失败！跳转到登录页面");
+          });
+        };
+
+        $scope.registerAndlogin = function () {
+          $http({
+            method: 'POST',
+            url: 'http://yp.compass-trip.com/platform/user/login',
+            data: {
+              "userName": $scope.openId
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            if (resp.data.token != "" && resp.data.token != null) {
+              var token = resp.data.token;
+              var userName = resp.data.userName;
+              $cookies.put("user", userName);
+              $cookies.put("token", token);
+            } else {
+              alert("登录失败！");
+            }
+          }, function (resp) {
+            alert("登录失败！服务调用失败！");
           });
         };
 
