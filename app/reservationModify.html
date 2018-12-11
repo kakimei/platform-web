@@ -57,7 +57,7 @@
           $scope.reserveVO.reservationInfoId = urlValue;
           $http({
             method: 'GET',
-            url: 'http://localhost:8081/platform/reserve/modify?token=' + $cookies.get('token') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
+            url: 'http://yp.compass-trip.com/platform/reserve/modify?openId=' + $cookies.get('openId') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -95,7 +95,7 @@
         $scope.signin = function () {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/reserve/signin?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve/signin?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -119,7 +119,7 @@
         $scope.cancel = function () {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/reserve/cancel?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve/cancel?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -143,7 +143,7 @@
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/reserve?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId,
               "linkManName": $scope.reserveVO.linkManName,
@@ -171,13 +171,6 @@
             self.location = 'login.html';
           });
         };
-
-        $scope.logout = function () {
-          $cookies.put("user", null);
-          $cookies.put("token", null);
-          location.href = 'login.html';
-        };
-
       });
     </script>
     <title>资源预约</title>
@@ -234,7 +227,6 @@
             <button ng-if="canSignin" type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="signin()">签到</button>
             <button ng-if="canModify" type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="cancel()">取消预约</button>
             <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="back()">返回</button>
-            <button type="button" class="button button-glow button-border button-rounded button-primary button-tiny" style="margin-bottom: 10px" ng-click="logout()">退出</button>
           </form>
         </div>
       </div>

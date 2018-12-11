@@ -45,7 +45,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://localhost:8081/platform/reserve/mySignInlist?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/reserve/mySignInlist?openId=' + $cookies.get('openId'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -66,16 +66,10 @@
           location.href = hre;
         };
 
-        $scope.logout = function () {
-          $cookies.put("user", null);
-          $cookies.put("token", null);
-          location.href = 'login.html';
-        };
-
         $scope.thumbsUp = function (reservationInfoId) {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/feedback/thumbsUp?token=' + $cookies.get('token'),
+            url: 'http://yp.compass-trip.com/platform/feedback/thumbsUp?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": reservationInfoId
             },
@@ -158,9 +152,6 @@
           </button>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="allReservation()">所有活动
-          </button>
-          <button type="button" class="button button-glow button-border button-rounded button-primary button-tiny" style="margin-bottom: 10px"
-                  ng-click="logout()">退出
           </button>
         </div>
       </div>

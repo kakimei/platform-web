@@ -39,7 +39,7 @@
           var code = $scope.getQueryString("code");
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/weixin/userInfo/get?code='+code,
+            url: 'http://yp.compass-trip.com/platform/weixin/userInfo/get?code=' + code,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -68,14 +68,9 @@
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            if (resp.data.token != "" && resp.data.token != null) {
-              var token = resp.data.token;
-              var userName = resp.data.userName;
-              $cookies.put("user", userName);
-              $cookies.put("token", token);
-            } else {
-              alert("登录失败！");
-            }
+            var userName = resp.data.userName;
+            $cookies.put("openId", userName);
+
           }, function (resp) {
             alert("登录失败！服务调用失败！");
           });
