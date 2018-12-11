@@ -36,10 +36,9 @@
 
         $scope.load = function () {
           var code = $scope.getQueryString("code");
-          // to do SECRET 需要替代掉
           $http({
             method: 'GET',
-            url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx22d16b90c898f61d&secret=SECRET&code='+code+'&grant_type=authorization_code',
+            url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx22d16b90c898f61d&secret=ebf24940e789946ef53b05a70391c95b&code='+code+'&grant_type=authorization_code',
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -93,7 +92,7 @@
           <label>欢迎使用杨浦滨江阅读建筑讲解预约系统</label>
         </div>
       </div>
-      <div ng-controller="reservationController" class="main2">
+      <div ng-controller="reservationController" class="main2" data-ng-init="load()">
         <div>
           <div style="margin-top: 30px; margin-bottom: 20px">
             <button class="button button-3d button-raised button-primary button-pill" ng-click="reserveTeam()">团队预约</button>
