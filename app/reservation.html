@@ -36,6 +36,9 @@
         };
 
         $scope.load = function () {
+          if($cookies.get('openId') != null){
+            return;
+          }
           var code = $scope.getQueryString("code");
           $http({
             method: 'GET',

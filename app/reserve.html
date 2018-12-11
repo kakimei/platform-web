@@ -140,13 +140,16 @@
         };
 
         $scope.changeReserveTime = function () {
-          if($scope.reserveVO.activityType == "TEAM"){
-            return;
-          }
-          var timeString = $scope.reserveVO.timeString;
-          var peopleRange = timeString.substr(timeString.indexOf("times:") + 6);
-          for(var i =1; i <= peopleRange; i++ ){
-            $scope.validPeopleRange.push(i);
+          $scope.validPeopleRange = new Array();
+          if ($scope.reserveVO.activityType == "TEAM") {
+            for(var i = 16; i <= 50; i++)
+              $scope.validPeopleRange.push(i);
+          } else {
+            var timeString = $scope.reserveVO.timeString;
+            var peopleRange = timeString.substr(timeString.indexOf("times:") + 6);
+            for (var i = 1; i <= peopleRange; i++) {
+              $scope.validPeopleRange.push(i);
+            }
           }
         };
 
@@ -239,7 +242,8 @@
               <label>预约时间段:</label>
               <select ng-model="reserveVO.timeString" ng-change="changeReserveTime()" required>
                 <option value="" disabled selected>请选择时间段</option>
-                <option ng-repeat="t in validtime" value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute + 'times:' + t.times}}">
+                <option ng-repeat="t in validtime"
+                        value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute + 'times:' + t.times}}">
                   {{timeFormatString(t.beginHour, t.beginMinute, t.endHour, t.endMinute)}}
                 </option>
               </select>
@@ -255,8 +259,8 @@
             </div>
             <div class="int">
               <label>预约类型:</label>
-              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" disabled/>团队
-              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled/>个人
+              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" disabled />团队
+              <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled />个人
             </div>
             <button type="submit" class="button button-glow button-rounded button-raised button-primary" style="margin-bottom: 10px">预约</button>
             <button type="button" class="button button-glow button-border button-rounded button-primary" style="margin-bottom: 10px"
