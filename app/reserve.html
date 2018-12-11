@@ -97,7 +97,6 @@
           var href = location.href;
           var activityTypeValue = href.substr(href.indexOf("=") + 1);
           $scope.reserveVO.activityType = activityTypeValue;
-          alert($cookies.get('openId'));
           var url = '';
           if ($scope.reserveVO.activityType == "TEAM") {
             url = 'http://yp.compass-trip.com/platform/reserve/team/validDateTime?openId=' + $cookies.get('openId');
