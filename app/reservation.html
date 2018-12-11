@@ -22,8 +22,8 @@
         });
       });
 
-      var app = angular.module("reservation", []);
-      app.controller('reservationController', function ($scope, $http) {
+      var app = angular.module("reservation", ['ngCookies']);
+      app.controller('reservationController', function ($cookies, $scope, $http) {
         $scope.openId = "";
         $scope.reserveTeam = function () {
           var hre = 'reserve.html?activityType=TEAM';
