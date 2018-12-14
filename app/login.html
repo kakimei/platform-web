@@ -25,7 +25,7 @@
         <div>
           <form ng-submit="loginForm()">
             登录名:<input type="text" ng-model="loginVO.userName" required /> <br />
-            密码:<input type="password" ng-minlength="6" ng-maxlength="15" ng-model="loginVO.password" required /> <br />
+            密码:<input type="password" ng-model="loginVO.password" required /> <br />
             <button type="submit" class="button button-glow button-rounded button-raised button-primary" style="margin-bottom: 10px">登录</button>
           </form>
         </div>
@@ -43,7 +43,7 @@
             url: 'http://yp.compass-trip.com/platform/bo/user/login',
             data: {
               "boUserName": $scope.loginVO.userName,
-              "oldBoUserPass": $scope.loginVO.password
+              "boUserPass": $scope.loginVO.password
             },
             headers: {
               'Content-Type': 'application/json',
