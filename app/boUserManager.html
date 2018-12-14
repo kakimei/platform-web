@@ -52,7 +52,7 @@
             }
           }).then(function (resp) {
             if (resp.data == true) {
-              location.href = boUserManager.html;
+              location.href = 'boUserManager.html';
             }
           }, function (resp) {
             alert("获取列表失败！服务调用失败！");
@@ -60,7 +60,7 @@
         };
         
         $scope.addMember = function () {
-          location.href = addBoUser.html;
+          location.href = 'addBoUser.html';
         }
       });
 
