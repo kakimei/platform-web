@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="qr" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/button.css">
+    <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
+    <script src="css/jquery.min.js"></script>
+    <script src="css/qrcode.min.js"></script>
+    <script>
+      var app = angular.module("qr", []);
+      app.controller('reservationController', function ($scope, $http) {
+        $scope.load = function () {
+          var reservationInfoId = $scope.getQueryString('reservationInfoId');
+          var qr = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22d16b90c898f61d&redirect_uri=http%3A%2F%2Fyp.compass-trip.com%2FsignIn.html?reservationInfoId="+reservationInfoId+"&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
+          new QRCode(document.getElementById("qrcode"), qr);
+        };
+
+        $scope.getQueryString = function (name) {
+          var href = location.href.substr(location.href.indexOf("?") + 1);
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+          var r = href.match(reg);
+          if (r != null) {
+            return unescape(r[2]);
+          }
+          return null;
+        };
+
+        $scope.goBack = function () {
+          self.location = "allReservation.html";
+        }
+      })
+    </script>
+    <title>签到二维码</title>
+  </head>
+  <body>
+    <div class="header">
+      <div id="header">
+      </div>
+    </div>
+    <div>
+      <img class="header-image" src="img/hd-bg.jpeg">
+    </div>
+    <div class="middle">
+      <div ng-controller="QrController" class="main2" data-ng-init="load()">
+        <div>
+          <div id="qrcode"></div>
+          <div style="margin-top: 10px; margin-bottom: 500px">
+            <button class="button button-3d button-raised button-primary button-pill" ng-click="goBack()">返回</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

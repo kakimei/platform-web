@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html ng-app="signIn" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
+    <script src="css/jquery.min.js"></script>
+    <script src="css/qrcode.min.js"></script>
+    <script>
+      var app = angular.module("signIn", ['ngCookies']);
+      app.controller('singInController', function ($cookies, $scope, $http) {
+        $scope.reservationInfoId = "";
+        $scope.load = function () {
+          var code = $scope.getQueryString("code");
+          $scope.reservationInfoId = $scope.getQueryString("reservationInfoId");
+          $http({
+            method: 'GET',
+            url: 'http://localhost:8081/platform/weixin/userInfo/get?code=' + code,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            if (resp.data != null) {
+              $scope.openId = resp.data.openid;
+              $scope.registerAndLogin();
+            } else {
+              alert("登录失败");
+            }
+          }, function (resp) {
+            alert("修改失败！服务调用失败！跳转到登录页面");
+          });
+        };
+
+        $scope.registerAndLogin = function () {
+          $http({
+            method: 'POST',
+            url: 'http://localhost:8081/platform/user/login',
+            data: {
+              "userName": $scope.openId
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            var userName = resp.data.userName;
+            $cookies.put("openId", userName);
+            $scope.singIn()
+          }, function (resp) {
+            alert("登录失败！服务调用失败！");
+          });
+        };
+
+        $scope.singIn = function (reservationInfoId) {
+          $http({
+            method: 'POST',
+            url: 'http://localhost:8081/platform/sign?openId=' + $cookies.get('openId'),
+            data: {
+              "reservationInfoId": $scope.reservationInfoId
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            if (resp.data == true) {
+              alert("签到成功！");
+              window.close();
+            } else {
+              alert("签到失败！");
+              window.close();
+            }
+          }, function (resp) {
+            alert("获取列表失败！服务调用失败！");
+            window.close();
+          });
+        };
+
+        $scope.getQueryString = function (name) {
+          var href = location.href.substr(location.href.indexOf("?") + 1);
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+          var r = href.match(reg);
+          if (r != null) {
+            return unescape(r[2]);
+          }
+          return null;
+        };
+      })
+    </script>
+    <title>签到</title>
+  </head>
+  <body>
+    <div ng-controller="singInController" data-ng-init="load()">
+    </div>
+  </body>
+</html>

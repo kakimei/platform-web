@@ -44,7 +44,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/reserve/list?openId=' + $cookies.get('openId'),
+            url: 'http://localhost:8081/platform/reserve/list?openId=' + $cookies.get('openId'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -67,6 +67,11 @@
         $scope.allReservation = function () {
           var hre = 'allReservation.html';
           location.href = hre;
+        };
+
+        $scope.downLoadReservation = function () {
+          self.location = 'http://localhost:8081/platform/bo/output/reservation/excel/date?reserveDate=2019-01-01';
+
         };
       });
 
@@ -123,6 +128,9 @@
           </button>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="allReservation()">所有活动
+          </button>
+          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                  ng-click="downLoadReservation()">下载
           </button>
         </div>
       </div>

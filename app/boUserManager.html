@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html ng-app="boUserManager" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
+    <script src="css/jquery.min.js"></script>
+
+    <script>
+      var app = angular.module("boUserManager", ['ngCookies']);
+      app.controller('boUserManagerController', function ($cookies, $scope, $http) {
+        $scope.roleType = {
+          "ADMIN": "管理人员",
+          "OPERATOR": "核销人员"
+        };
+        $scope.boUserListForm = {};
+        $scope.load = function () {
+          var boToken = $cookies.get('boToken');
+          var boUser = $cookies.get('boUser');
+          var boRole = $cookies.get('boRole');
+          $http({
+            method: 'GET',
+            url: 'http://localhost:8081/platform/bo/user/all?boUserToken=' + boToken + '&boUser=' + boUser,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            $scope.boUserListForm = resp.data;
+          }, function (resp) {
+            alert("获取列表失败！服务调用失败！");
+          });
+        };
+
+        $scope.deleteMember = function (boUserName) {
+          var boToken = $cookies.get('boToken');
+          var boUser = $cookies.get('boUser');
+          var boRole = $cookies.get('boRole');
+          $http({
+            method: 'POST',
+            url: 'http://localhost:8081/platform/bo/user/deleteBoUser?boUserToken=' + boToken + '&boUser=' + boUser,
+            data: {
+              'boUserName': boUserName
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            if (resp.data == true) {
+              location.href = boUserManager.html;
+            }
+          }, function (resp) {
+            alert("获取列表失败！服务调用失败！");
+          });
+        };
+        
+        $scope.addMember = function () {
+          location.href = addBoUser.html;
+        }
+      });
+
+    </script>
+    <title>管理人员一览</title>
+  </head>
+  <body>
+    <div class="header">
+      <div id="header">
+        <span id="lblTitle">管理人员一览</span>
+      </div>
+    </div>
+    <div>
+      <img class="header-image" src="img/hd-bg.jpeg">
+    </div>
+    <div class="middle">
+      <div ng-controller="boUserManagerController as boUserVO" class="main" data-ng-init="load()">
+        <div>
+          <table class=table8_1 style="margin-top: 10px">
+            <tr>
+              <th style="background-color:#fcc80a">姓名</th>
+              <th style="background-color:#fcc80a">角色</th>
+            </tr>
+            <tr ng-repeat="item in boUserListForm">
+              <td ng-if="$odd" style="background-color:lightgray">{{item.boUserName}}</td>
+              <td ng-if="$even">{{item.boUserName}}</td>
+              <td ng-if="$odd" style="background-color:lightgray">{{roleType[item.roleType]}}</td>
+              <td ng-if="$even">{{roleType[item.roleType]}}</td>
+              <td ng-if="$odd" style="background-color:lightgray">
+                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="deleteMember(item.boUserName)">删除</button>
+              </td>
+              <td ng-if="$even">
+                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="deleteMember(item.boUserName)">删除</button>
+              </td>
+            </tr>
+          </table>
+          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                  ng-click="addMember()">添加
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -11,19 +11,6 @@
     <script src="css/jquery.min.js"></script>
 
     <script>
-      $(function () {
-        if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
-          $('#header>a.home').show();
-        }
-        $('#header>dl.more>dt').click(function () {
-          var $obj = $(this).parent().find('dd');
-          $obj.show();
-          setTimeout(function () {
-            $obj.hide();
-          }, 3000);
-        });
-      });
-
       var app = angular.module("allReservation", ['ngCookies']);
       app.controller('allReservationController', function ($cookies, $scope, $http) {
         $scope.reservationListForm = {};
@@ -36,9 +23,12 @@
           "FEMALE": "女"
         };
         $scope.load = function () {
+          var boToken = $cookies.get('boToken');
+          var boUser = $cookies.get('boUser');
+          var boRole = $cookies.get('boRole');
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/reserve/alllist?openId=' + $cookies.get('openId'),
+            url: 'http://localhost:8081/platform/bo/reserve/alllist?boUserToken=' + boToken + '&boUser=' + boUser,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -47,36 +37,11 @@
             $scope.reservationListForm = resp.data;
           }, function (resp) {
             alert("获取列表失败！服务调用失败！");
-            self.location = 'login.html';
           });
         };
 
-        $scope.back = function () {
-          self.location = 'reservationList.html';
-        };
-
-        $scope.singin = function (reservationInfoId) {
-          $http({
-            method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/sign?openId=' + $cookies.get('openId'),
-            data: {
-              "reservationInfoId": reservationInfoId
-            },
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          }).then(function (resp) {
-            if (resp.data == true) {
-              alert("签到成功！");
-              $scope.load();
-            } else {
-              alert("签到失败！");
-            }
-          }, function (resp) {
-            alert("获取列表失败！服务调用失败！");
-            self.location = 'login.html';
-          });
+        $scope.signInQR = function (reservationInfoId) {
+          self.location = 'QR.html?reservationInfoId=' + reservationInfoId;
         };
       });
 
@@ -86,15 +51,7 @@
   <body>
     <div class="header">
       <div id="header">
-        <a class="home" href="reservation.html" title="预约"><i></i></a>
         <span id="lblTitle">活动一览</span>
-        <dl class="more" title="预约一览">
-          <dt><i></i></dt>
-          <dd>
-            <a href="reservationList.html">预约查询</a>
-            <a href="reservationSignInList.html">参与的预约</a>
-          </dd>
-        </dl>
       </div>
     </div>
     <div>
@@ -122,21 +79,20 @@
               <td ng-if="$even">{{item.reserveDay | date:'MM/dd'}}</td>
               <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
               <td ng-if="$even">{{item.timeString}}</td>
-              <td ng-if="$odd && (item.hasSigned || item.inactiveTime)" style="background-color:lightgray">
-                <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled" ng-click="singin(item.reservationInfoId)">签</button>
+              <td ng-if="$odd && (item.inactiveTime)" style="background-color:lightgray">
+                <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled">签</button>
               </td>
-              <td ng-if="$odd && (!item.hasSigned && !item.inactiveTime)" style="background-color:lightgray">
-                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="singin(item.reservationInfoId)">签</button>
+              <td ng-if="$odd && (!item.inactiveTime)" style="background-color:lightgray">
+                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="signInQR(item.reservationInfoId)">签</button>
               </td>
-              <td ng-if="$even && (item.hasSigned || item.inactiveTime)">
-                <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled" ng-click="singin(item.reservationInfoId)">签</button>
+              <td ng-if="$even && (item.inactiveTime)">
+                <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled">签</button>
               </td>
-              <td ng-if="$even && (!item.hasSigned && !item.inactiveTime)">
-                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="singin(item.reservationInfoId)">签</button>
+              <td ng-if="$even && (!item.inactiveTime)">
+                <button class="button button-3d button-box button-jumbo button-tiny" ng-click="signInQR(item.reservationInfoId)">签</button>
               </td>
             </tr>
           </table>
-          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="back()">返回</button>
         </div>
       </div>
     </div>
