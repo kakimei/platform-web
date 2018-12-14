@@ -58,7 +58,7 @@
           $scope.reserveVO.reservationInfoId = urlValue;
           $http({
             method: 'GET',
-            url: 'http://localhost:8081/platform/reserve/modify?openId=' + $cookies.get('openId') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
+            url: 'http://yp.compass-trip.com/platform/reserve/modify?openId=' + $cookies.get('openId') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -97,7 +97,7 @@
           new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/reserve/signin?openId=' + $cookies.get('openId'),
+            url: 'http://yp.compass-trip.com/platform/reserve/signin?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -121,7 +121,7 @@
         $scope.cancel = function () {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/reserve/cancel?openId=' + $cookies.get('openId'),
+            url: 'http://yp.compass-trip.com/platform/reserve/cancel?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -145,7 +145,7 @@
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/reserve?openId=' + $cookies.get('openId'),
+            url: 'http://yp.compass-trip.com/platform/reserve?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId,
               "linkManName": $scope.reserveVO.linkManName,

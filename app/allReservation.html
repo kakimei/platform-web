@@ -28,7 +28,7 @@
           var boRole = $cookies.get('boRole');
           $http({
             method: 'GET',
-            url: 'http://localhost:8081/platform/bo/reserve/alllist?boUserToken=' + boToken + '&boUser=' + boUser,
+            url: 'http://yp.compass-trip.com/platform/bo/reserve/alllist?boUserToken=' + boToken + '&boUser=' + boUser,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'

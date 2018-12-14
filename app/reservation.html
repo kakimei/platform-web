@@ -44,7 +44,7 @@
           var code = $scope.getQueryString("code");
           $http({
             method: 'GET',
-            url: 'http://localhost:8081/platform/weixin/userInfo/get?code=' + code,
+            url: 'http://yp.compass-trip.com/platform/weixin/userInfo/get?code=' + code,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -64,7 +64,7 @@
         $scope.registerAndLogin = function () {
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/user/login',
+            url: 'http://yp.compass-trip.com/platform/user/login',
             data: {
               "userName": $scope.openId
             },

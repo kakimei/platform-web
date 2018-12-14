@@ -24,7 +24,7 @@
           var boRole = $cookies.get('boRole');
           $http({
             method: 'GET',
-            url: 'http://localhost:8081/platform/bo/user/all?boUserToken=' + boToken + '&boUser=' + boUser,
+            url: 'http://yp.compass-trip.com/platform/bo/user/all?boUserToken=' + boToken + '&boUser=' + boUser,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -42,7 +42,7 @@
           var boRole = $cookies.get('boRole');
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/bo/user/deleteBoUser?boUserToken=' + boToken + '&boUser=' + boUser,
+            url: 'http://yp.compass-trip.com/platform/bo/user/deleteBoUser?boUserToken=' + boToken + '&boUser=' + boUser,
             data: {
               'boUserName': boUserName
             },

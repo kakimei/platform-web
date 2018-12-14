@@ -44,7 +44,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://localhost:8081/platform/reserve/list?openId=' + $cookies.get('openId'),
+            url: 'http://yp.compass-trip.com/platform/reserve/list?openId=' + $cookies.get('openId'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -70,7 +70,7 @@
         };
 
         $scope.downLoadReservation = function () {
-          self.location = 'http://localhost:8081/platform/bo/output/reservation/excel/date?reserveDate=2019-01-01';
+          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/date?reserveDate=2019-01-01';
 
         };
       });

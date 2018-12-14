@@ -64,7 +64,7 @@
           var ts = $scope.reserveVO.timeString.substr(0, $scope.reserveVO.timeString.indexOf("times:"));
           $http({
             method: 'POST',
-            url: 'http://localhost:8081/platform/reserve?openId=' + $cookies.get('openId'),
+            url: 'http://yp.compass-trip.com/platform/reserve?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": null,
               "linkManName": $scope.reserveVO.linkManName,
@@ -99,9 +99,9 @@
           $scope.reserveVO.activityType = activityTypeValue;
           var url = '';
           if ($scope.reserveVO.activityType == "TEAM") {
-            url = 'http://localhost:8081/platform/reserve/team/validDateTime?openId=' + $cookies.get('openId');
+            url = 'http://yp.compass-trip.com/platform/reserve/team/validDateTime?openId=' + $cookies.get('openId');
           } else {
-            url = 'http://localhost:8081/platform/reserve/single/validDateTime?openId=' + $cookies.get('openId');
+            url = 'http://yp.compass-trip.com/platform/reserve/single/validDateTime?openId=' + $cookies.get('openId');
           }
 
           $http({
