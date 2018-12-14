@@ -11,11 +11,11 @@
     <script src="css/qrcode.min.js"></script>
     <script>
       var app = angular.module("qr", []);
-      app.controller('reservationController', function ($scope, $http) {
+      app.controller('QrController', function ($scope, $http) {
         $scope.load = function () {
           var reservationInfoId = $scope.getQueryString('reservationInfoId');
-          var qr = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22d16b90c898f61d&redirect_uri=http%3A%2F%2Fyp.compass-trip.com%2FsignIn.html?reservationInfoId="+reservationInfoId+"&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
-          new QRCode(document.getElementById("qrcode"), qr);
+          var qrcode = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22d16b90c898f61d&redirect_uri=http%3A%2F%2Fyp.compass-trip.com%2FsignIn.html?reservationInfoId="+reservationInfoId+"&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
+          new QRCode(document.getElementById("qrcode"), qrcode);
         };
 
         $scope.getQueryString = function (name) {
@@ -46,7 +46,7 @@
     <div class="middle">
       <div ng-controller="QrController" class="main2" data-ng-init="load()">
         <div>
-          <div id="qrcode"></div>
+          <div id="qrcode" style="margin-top: 50px"></div>
           <div style="margin-top: 10px; margin-bottom: 500px">
             <button class="button button-3d button-raised button-primary button-pill" ng-click="goBack()">返回</button>
           </div>
