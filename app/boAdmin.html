@@ -10,6 +10,19 @@
     <script src="css/jquery.min.js"></script>
     <script src="css/qrcode.min.js"></script>
     <script>
+      $(function () {
+        if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
+          $('#header>a.home').show();
+        }
+        $('#header>dl.more>dt').click(function () {
+          var $obj = $(this).parent().find('dd');
+          $obj.show();
+          setTimeout(function () {
+            $obj.hide();
+          }, 3000);
+        });
+      });
+
       var app = angular.module("boAdmin", ['ngCookies']);
       app.controller('boAdminController', function ($cookies, $scope, $http) {
         $scope.boUserManager = function () {
@@ -18,7 +31,7 @@
 
         $scope.allReservation = function () {
           location.href = 'allReservation.html';
-        }
+        };
       })
     </script>
     <title>后台管理</title>
@@ -26,7 +39,15 @@
   <body>
     <div class="header">
       <div id="header">
+        <a class="home" href="boAdmin.html" title="后台管理"><i></i></a>
         <span id="lblTitle">后台管理</span>
+        <dl class="more" title="">
+          <dt><i></i></dt>
+          <dd>
+            <a href="changePassword.html">更改密码</a>
+            <a href="login.html">退出</a>
+          </dd>
+        </dl>
       </div>
     </div>
     <div>
@@ -38,7 +59,7 @@
           <div style="margin-top: 30px; margin-bottom: 20px">
             <button class="button button-3d button-raised button-primary button-pill" ng-click="boUserManager()">人员管理</button>
           </div>
-          <div style="margin-top: 10px; margin-bottom: 20px">
+          <div style="margin-top: 10px; margin-bottom: 500px">
             <button class="button button-3d button-raised button-primary button-pill" ng-click="allReservation()">预约管理</button>
           </div>
         </div>

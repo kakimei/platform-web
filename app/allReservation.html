@@ -11,6 +11,19 @@
     <script src="css/jquery.min.js"></script>
 
     <script>
+      $(function () {
+        if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
+          $('#header>a.home').show();
+        }
+        $('#header>dl.more>dt').click(function () {
+          var $obj = $(this).parent().find('dd');
+          $obj.show();
+          setTimeout(function () {
+            $obj.hide();
+          }, 3000);
+        });
+      });
+
       var app = angular.module("allReservation", ['ngCookies']);
       app.controller('allReservationController', function ($cookies, $scope, $http, $filter) {
         $scope.selectReservationDate = "";
@@ -72,17 +85,23 @@
         };
 
         $scope.exportAllReservation = function () {
-          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/all';
+          var boToken = $cookies.get('boToken');
+          var boUser = $cookies.get('boUser');
+          var boRole = $cookies.get('boRole');
+          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/all?boUserToken=' + boToken + '&boUser=' + boUser;
         };
 
         $scope.exportReservationWithDate = function () {
+          var boToken = $cookies.get('boToken');
+          var boUser = $cookies.get('boUser');
+          var boRole = $cookies.get('boRole');
           var selectReservationDate = $scope.selectReservationDate;
           if (selectReservationDate == null || selectReservationDate == '') {
             alert("请选择要导出的日期。");
             return;
           }
           var date = $filter('date')(selectReservationDate, 'yyyy-MM-dd');
-          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/date?reserveDate=' + date;
+          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/date?reserveDate=' + date + '&boUserToken=' + boToken + '&boUser=' + boUser;
         };
 
         $scope.goBack = function () {
@@ -96,7 +115,15 @@
   <body>
     <div class="header">
       <div id="header">
+        <a class="home" href="boAdmin.html" title="后台管理"><i></i></a>
         <span id="lblTitle">活动一览</span>
+        <dl class="more" title="">
+          <dt><i></i></dt>
+          <dd>
+            <a href="changePassword.html">更改密码</a>
+            <a href="login.html">退出</a>
+          </dd>
+        </dl>
       </div>
     </div>
     <div>
@@ -144,10 +171,10 @@
             </tr>
           </table>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
-                  ng-click="exportAllReservation()">导出所有预约
+                  ng-click="exportAllReservation()">导出所有
           </button>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
-                  ng-click="exportReservationWithDate()">导出指定日期预约
+                  ng-click="exportReservationWithDate()">导出指定日期
           </button>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="goBack()">返回

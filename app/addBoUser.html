@@ -33,6 +33,19 @@
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
     <script src="css/jquery.min.js"></script>
     <script>
+      $(function () {
+        if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
+          $('#header>a.home').show();
+        }
+        $('#header>dl.more>dt').click(function () {
+          var $obj = $(this).parent().find('dd');
+          $obj.show();
+          setTimeout(function () {
+            $obj.hide();
+          }, 3000);
+        });
+      });
+
       var app = angular.module("addBoUser", ['ngCookies']);
       app.controller('addBoUserController', function ($cookies, $scope, $http) {
         $scope.boUserVO.boUserName = "";
@@ -77,7 +90,15 @@
   <body>
     <div class="header">
       <div id="header">
+        <a class="home" href="boAdmin.html" title="后台管理"><i></i></a>
         <span id="lblTitle">添加后台人员</span>
+        <dl class="more" title="">
+          <dt><i></i></dt>
+          <dd>
+            <a href="changePassword.html">更改密码</a>
+            <a href="login.html">退出</a>
+          </dd>
+        </dl>
       </div>
     </div>
     <div>

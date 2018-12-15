@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html ng-app="login" lang="en">
   <head>
@@ -37,6 +36,12 @@
     <script>
       var app = angular.module("login", ['ngCookies']);
       app.controller('loginController', function ($cookies, $scope, $http, $window) {
+        $scope.load = function () {
+          $cookies.remove("boToken");
+          $cookies.remove("boRole");
+          $cookies.remove("boUser");
+        };
+
         $scope.loginForm = function () {
           $http({
             method: 'POST',
@@ -58,9 +63,9 @@
               $cookies.put("boToken", token);
               $cookies.put("boRole", role);
               $cookies.put("boUser", boUser);
-              if(role == 'OPERATOR'){
+              if (role == 'OPERATOR') {
                 self.location = 'allReservation.html';
-              }else{
+              } else {
                 self.location = 'boAdmin.html';
               }
             } else {
