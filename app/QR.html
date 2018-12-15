@@ -38,12 +38,19 @@
   <body>
     <div class="header">
       <div id="header">
+        <a class="home" href="boAdmin.html" title="后台管理"><i></i></a>
+        <span id="lblTitle">签到二维码</span>
       </div>
     </div>
     <div>
       <img class="header-image" src="img/hd-bg.jpeg">
     </div>
     <div class="middle">
+      <div class="bodytitle">
+        <div>
+          <label>签到二维码，请用微信扫码</label>
+        </div>
+      </div>
       <div ng-controller="QrController" class="main2" data-ng-init="load()">
         <div>
           <div id="qrcode" style="margin-top: 50px"></div>
