@@ -8,7 +8,6 @@
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
     <script src="css/jquery.min.js"></script>
-    <script src="css/qrcode.min.js"></script>
     <script>
       $(function () {
         if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
@@ -92,10 +91,6 @@
           }
           return null;
         };
-
-        $scope.sign = function () {
-          new QRCode(document.getElementById("qrcode"), "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22d16b90c898f61d&redirect_uri=http%3A%2F%2Fyp.compass-trip.com%2Freservation.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect");
-        }
       })
     </script>
     <title>预约导航</title>
@@ -134,7 +129,6 @@
           <div style="margin-top: 10px; margin-bottom: 500px">
             <button class="button button-3d button-raised button-primary button-pill" ng-click="sign()">签到</button>
           </div>
-          <div id="qrcode"></div>
         </div>
       </div>
     </div>
