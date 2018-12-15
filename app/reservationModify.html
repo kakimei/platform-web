@@ -78,44 +78,16 @@
               var now = $filter("date")(new Date(), "yyyyMMdd");
               var startDate = $filter("date")($scope.reserveVO.reserveDay, "yyyyMMdd");
               $scope.canModify = startDate > now;
-              $scope.canSignin = startDate <= now && !$scope.reserveVO.signIn;
             } else {
-              alert("不可修改！重新登录");
-              self.location = 'login.html';
+              alert("取得预约信息失败！");
             }
           }, function (resp) {
-            alert("修改失败！服务调用失败！跳转到登录页面");
-            self.location = 'login.html';
+            alert("服务调用失败！");
           });
         };
 
         $scope.back = function () {
           self.location = 'reservationList.html';
-        };
-
-        $scope.signin = function () {
-          new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
-          $http({
-            method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/reserve/signin?openId=' + $cookies.get('openId'),
-            data: {
-              "reservationInfoId": $scope.reserveVO.reservationInfoId
-            },
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          }).then(function (resp) {
-            if (resp.data != null && resp.data != '') {
-              alert("签到成功！");
-              self.location = 'reservationList.html';
-            } else {
-              alert("签到失败！");
-            }
-          }, function (resp) {
-            alert("修改失败！服务调用失败！跳转到登录页面");
-            self.location = 'login.html';
-          });
         };
 
         $scope.cancel = function () {
@@ -137,8 +109,8 @@
               alert("取消失败！");
             }
           }, function (resp) {
-            alert("取消失败！服务调用失败！跳转到登录页面");
-            self.location = 'login.html';
+            alert("服务调用失败！");
+            self.location = 'reservationList.html';
           });
         };
 
@@ -169,8 +141,8 @@
               alert("修改失败！");
             }
           }, function (resp) {
-            alert("修改失败！服务调用失败！跳转到登录页面");
-            self.location = 'login.html';
+            alert("服务调用失败！");
+            self.location = 'reservationList.html';
           });
         };
       });
@@ -226,7 +198,6 @@
               <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" disabled/>团队
               <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled/>个人
             </div>
-            <button ng-if="canSignin" type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="signin()">签到</button>
             <button ng-if="canModify" type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="cancel()">取消预约</button>
             <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="back()">返回</button>
           </form>

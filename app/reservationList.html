@@ -53,12 +53,9 @@
             $scope.reservationListForm = resp.data;
           }, function (resp) {
             alert("获取列表失败！服务调用失败！");
-            self.location = 'login.html';
           });
         };
-        $scope.reserve = function () {
-          self.location = 'reservation.html';
-        };
+
         $scope.modify = function (reservationId) {
           var hre = 'reservationModify.html?reservationInfoId=' + reservationId;
           location.href = hre;
@@ -118,9 +115,6 @@
               </tr>
             </tbody>
           </table>
-          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
-                  ng-click="reserve()">预定
-          </button>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="allReservation()">所有活动
           </button>

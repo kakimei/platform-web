@@ -83,13 +83,13 @@
           }).then(function (resp) {
             if (resp.data == true) {
               alert("预约成功！");
-              self.location = 'reservationList.html';
             } else {
               alert("预约失败！");
             }
+            self.location = 'reservation.html';
           }, function (resp) {
-            alert("预约失败！服务调用失败！跳转到登录页面");
-            self.location = 'login.html';
+            alert("服务调用失败！");
+            self.location = 'reservation.html';
           });
         };
 
@@ -120,8 +120,7 @@
               }
             }
           }, function (resp) {
-            alert("预约失败！服务调用失败！跳转到登录页面");
-            self.location = 'login.html';
+            alert("服务调用失败！");
           });
 
         };

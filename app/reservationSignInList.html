@@ -53,8 +53,7 @@
           }).then(function (resp) {
             $scope.reservationListForm = resp.data;
           }, function (resp) {
-            alert("获取列表失败！服务调用失败！");
-            self.location = 'login.html';
+            alert("服务调用失败！");
           });
         };
         $scope.reserve = function () {
@@ -81,7 +80,6 @@
             $scope.load();
           }, function (resp) {
             alert("获取列表失败！服务调用失败！");
-            self.location = 'login.html';
           });
         }
       });

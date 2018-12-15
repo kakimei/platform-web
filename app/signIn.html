@@ -8,7 +8,7 @@
     <script src="css/qrcode.min.js"></script>
     <script>
       var app = angular.module("signIn", ['ngCookies']);
-      app.controller('singInController', function ($cookies, $scope, $http) {
+      app.controller('singInController', function ($cookies, $scope, $http, $window) {
         $scope.reservationInfoId = "";
         $scope.load = function () {
           var code = $scope.getQueryString("code");
@@ -25,10 +25,10 @@
               $scope.openId = resp.data.openid;
               $scope.registerAndLogin();
             } else {
-              alert("登录失败");
+              alert("签到失败");
             }
           }, function (resp) {
-            alert("修改失败！服务调用失败！跳转到登录页面");
+            alert("服务调用失败！");
           });
         };
 
@@ -66,14 +66,14 @@
           }).then(function (resp) {
             if (resp.data == true) {
               alert("签到成功！");
-              window.close();
+              $window.close();
             } else {
               alert("签到失败！");
-              window.close();
+              $window.close();
             }
           }, function (resp) {
-            alert("获取列表失败！服务调用失败！");
-            window.close();
+            alert("服务调用失败！");
+            $window.close();
           });
         };
 
