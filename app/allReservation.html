@@ -12,7 +12,7 @@
 
     <script>
       var app = angular.module("allReservation", ['ngCookies']);
-      app.controller('allReservationController', function ($cookies, $scope, $http) {
+      app.controller('allReservationController', function ($cookies, $scope, $http, $filter) {
         $scope.selectReservationDate = "";
         $scope.reservationListForm = {};
         $scope.activityT = {
@@ -77,12 +77,16 @@
 
         $scope.exportReservationWithDate = function () {
           var selectReservationDate = $scope.selectReservationDate;
-          if(selectReservationDate == null || selectReservationDate == ''){
+          if (selectReservationDate == null || selectReservationDate == '') {
             alert("请选择要导出的日期。");
             return;
           }
           var date = $filter('date')(selectReservationDate, 'yyyy-MM-dd');
-          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/date?reserveDate='+date;
+          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/date?reserveDate=' + date;
+        };
+
+        $scope.goBack = function () {
+          location.href = 'boAdmin.html';
         };
       });
 
@@ -144,6 +148,9 @@
           </button>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="exportReservationWithDate()">导出指定日期预约
+          </button>
+          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                  ng-click="goBack()">返回
           </button>
         </div>
       </div>

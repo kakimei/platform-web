@@ -61,6 +61,10 @@
         
         $scope.addMember = function () {
           location.href = 'addBoUser.html';
+        };
+
+        $scope.goBack = function () {
+          location.href = 'boAdmin.html';
         }
       });
 
@@ -100,6 +104,9 @@
           </table>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="addMember()">添加
+          </button>
+          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                  ng-click="goBack()">返回
           </button>
         </div>
       </div>
