@@ -13,6 +13,7 @@
     <script>
       var app = angular.module("allReservation", ['ngCookies']);
       app.controller('allReservationController', function ($cookies, $scope, $http) {
+        $scope.selectReservationDate = "";
         $scope.reservationListForm = {};
         $scope.activityT = {
           "TEAM": "团",
@@ -43,6 +44,46 @@
         $scope.signInQR = function (reservationInfoId) {
           self.location = 'QR.html?reservationInfoId=' + reservationInfoId;
         };
+
+        $scope.searchReservation = function () {
+          var boToken = $cookies.get('boToken');
+          var boUser = $cookies.get('boUser');
+          var boRole = $cookies.get('boRole');
+          var selectReservationDate = $scope.selectReservationDate;
+          var url = '';
+          if (selectReservationDate == null || selectReservationDate == '') {
+            url = 'http://yp.compass-trip.com/platform/bo/reserve/alllist?boUserToken=' + boToken + '&boUser=' + boUser;
+          } else {
+            var date = $filter('date')(selectReservationDate, 'yyyy-MM-dd');
+            url = 'http://yp.compass-trip.com/platform/bo/reserve/' + date + '/list?boUserToken=' + boToken + '&boUser=' + boUser;
+          }
+          $http({
+            method: 'GET',
+            url: url,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            $scope.reservationListForm = resp.data;
+          }, function (resp) {
+            alert("获取列表失败！服务调用失败！");
+          });
+        };
+
+        $scope.exportAllReservation = function () {
+          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/all';
+        };
+
+        $scope.exportReservationWithDate = function () {
+          var selectReservationDate = $scope.selectReservationDate;
+          if(selectReservationDate == null || selectReservationDate == ''){
+            alert("请选择要导出的日期。");
+            return;
+          }
+          var date = $filter('date')(selectReservationDate, 'yyyy-MM-dd');
+          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/date?reserveDate='+date;
+        };
       });
 
     </script>
@@ -60,6 +101,11 @@
     <div class="middle">
       <div ng-controller="allReservationController as reservationListVO" class="main" data-ng-init="load()">
         <div>
+          <div>
+            <label>预约日期:</label>
+            <input placeholder="选择日期" type="date" ng-model="selectReservationDate" />
+            <button class="button button-3d button-box button-jumbo button-tiny" ng-click="searchReservation()">搜索</button>
+          </div>
           <table class=table8_1 style="margin-top: 10px; margin-bottom: 10px">
             <tr>
               <th style="background-color:#fcc80a">联系人</th>
@@ -93,6 +139,12 @@
               </td>
             </tr>
           </table>
+          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                  ng-click="exportAllReservation()">导出所有预约
+          </button>
+          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                  ng-click="exportReservationWithDate()">导出指定日期预约
+          </button>
         </div>
       </div>
     </div>

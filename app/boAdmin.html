@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="boAdmin" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/button.css">
+    <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
+    <script src="css/jquery.min.js"></script>
+    <script src="css/qrcode.min.js"></script>
+    <script>
+      var app = angular.module("boAdmin", ['ngCookies']);
+      app.controller('boAdminController', function ($cookies, $scope, $http) {
+        $scope.boUserManager = function () {
+          location.href = 'boUserManager.html';
+        };
+
+        $scope.allReservation = function () {
+          location.href = 'allReservation.html';
+        }
+      })
+    </script>
+    <title>后台管理</title>
+  </head>
+  <body>
+    <div class="header">
+      <div id="header">
+        <span id="lblTitle">后台管理</span>
+      </div>
+    </div>
+    <div>
+      <img class="header-image" src="img/hd-bg.jpeg">
+    </div>
+    <div class="middle">
+      <div ng-controller="boAdminController" class="main2" data-ng-init="load()">
+        <div>
+          <div style="margin-top: 30px; margin-bottom: 20px">
+            <button class="button button-3d button-raised button-primary button-pill" ng-click="boUserManager()">人员管理</button>
+          </div>
+          <div style="margin-top: 10px; margin-bottom: 20px">
+            <button class="button button-3d button-raised button-primary button-pill" ng-click="allReservation()">预约管理</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
