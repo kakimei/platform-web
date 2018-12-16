@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html ng-app="boUserDetail" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/button.css">
+    <style>
+      form div {
+        margin: 5px 0;
+      }
+
+      .int label {
+        width: 100px;
+        float: left;
+        text-align: right;
+      }
+
+      .int input {
+        padding: 1px 1px;
+        border: 1px solid #ccc;
+        height: 30px;
+      }
+
+      .int select {
+        padding: 1px 1px;
+        border: 1px solid #ccc;
+        height: 30px;
+      }
+
+    </style>
+    <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
+    <script src="css/jquery.min.js"></script>
+    <script>
+      $(function () {
+        if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
+          $('#header>a.home').show();
+        }
+        $('#header>dl.more>dt').click(function () {
+          var $obj = $(this).parent().find('dd');
+          $obj.show();
+          setTimeout(function () {
+            $obj.hide();
+          }, 3000);
+        });
+      });
+
+      var app = angular.module("boUserDetail", ['ngCookies']);
+      app.controller('boUserDetailController', function ($cookies, $scope, $http) {
+        $scope.boUserVO.boUserId = "";
+        $scope.boUserVO.boUserName = "";
+        $scope.boUserVO.roleType = "";
+        $scope.boToken = $cookies.get('boToken');
+        $scope.boUser = $cookies.get('boUser');
+        $scope.boRole = $cookies.get('boRole');
+
+        $scope.load = function () {
+          var boUserId = $scope.getQueryString('boUserId');
+          $http({
+            method: 'GET',
+            url: 'http://yp.compass-trip.com/platform/bo/user/find?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser + '&boUserId=' + boUserId,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            if (resp.data != null) {
+              $scope.boUserVO.boUserName = resp.data.boUserName;
+              $scope.boUserVO.roleType = resp.data.roleType;
+              $scope.boUserVO.boUserId = resp.data.boUserId;
+            } else {
+              alert("没有此人员！");
+            }
+          }, function (resp) {
+            alert("服务调用失败！");
+          });
+        };
+
+        $scope.getQueryString = function (name) {
+          var href = location.href.substr(location.href.indexOf("?") + 1);
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+          var r = href.match(reg);
+          if (r != null) {
+            return unescape(r[2]);
+          }
+          return null;
+        };
+
+        $scope.updateBoUserForm = function () {
+          $http({
+            method: 'POST',
+            url: 'http://yp.compass-trip.com/platform/bo/user/update?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
+            data: {
+              "boUserId": $scope.boUserVO.boUserId,
+              "boUserName": $scope.boUserVO.boUserName,
+              "roleType": $scope.boUserVO.roleType
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            if (resp.data == true) {
+              alert("修改成功！");
+              self.location = 'boUserManager.html';
+            } else {
+              alert("修改失败！");
+            }
+          }, function (resp) {
+            alert("服务调用失败！");
+          });
+        };
+
+        $scope.resetPassword = function(){
+          $http({
+            method: 'POST',
+            url: 'http://yp.compass-trip.com/platform/bo/user/password/reset?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
+            data: {
+              "boUserId": $scope.boUserVO.boUserId
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            if (resp.data == true) {
+              alert("重置成功！密码初始化为11111111");
+              self.location = 'boUserManager.html';
+            } else {
+              alert("重置失败！");
+            }
+          }, function (resp) {
+            alert("服务调用失败！");
+          });
+        }
+
+        $scope.goBack = function () {
+          location.href = 'boUserManager.html';
+        }
+      });
+    </script>
+    <title>更改后台人员</title>
+  </head>
+  <body>
+    <div class="header">
+      <div id="header">
+        <a class="home" href="boAdmin.html" title="后台管理"><i></i></a>
+        <span id="lblTitle">更改后台人员</span>
+        <dl class="more" title="">
+          <dt><i></i></dt>
+          <dd>
+            <a href="changePassword.html">更改密码</a>
+            <a href="login.html">退出</a>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div>
+      <img class="header-image" src="img/hd-bg.jpeg">
+    </div>
+    <div class="middle">
+      <div ng-controller="boUserDetailController as boUserVO" class="main" data-ng-init="load()">
+        <div>
+          <form name="rForm" ng-submit="updateBoUserForm()">
+            <div class="int">
+              <label>管理人员姓名:</label>
+              <input type="text" ng-model="boUserVO.boUserName" readonly  unselectable="on"/>
+            </div>
+            <div class="int">
+              <label>人员角色:</label>
+              <input name="role" type="radio" ng-model="boUserVO.roleType" value="ADMIN" />管理人员
+              <input name="role" type="radio" ng-model="boUserVO.roleType" value="OPERATOR" />核销人员
+            </div>
+            <button type="submit" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px">更新</button>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="resetPassword()">密码重置</button>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="goBack()">返回</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
