@@ -244,6 +244,10 @@
           var minuteEnd = timeString.substr(timeString.indexOf(":") + 1);
           return $scope.timeFormatString(hourBegin, minuteBegin, hourEnd, minuteEnd);
         };
+
+        $scope.goBack = function () {
+          self.location = 'myReservationList.html';
+        }
       });
     </script>
     <title>资源预约</title>
@@ -330,7 +334,7 @@
             </div>
             <button ng-if="canModify" type="submit" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px">更新</button>
             <button ng-if="canModify" type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="cancel()">取消</button>
-            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="back()">返回</button>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px" ng-click="goBack()">返回</button>
           </form>
         </div>
       </div>
