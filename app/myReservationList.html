@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="reservationList" lang="en">
+<html ng-app="myReservationList" lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -30,9 +30,8 @@
         });
       });
 
-      var app = angular.module("reservationList", ['ngCookies']);
-      app.controller('reservationListController', function ($cookies, $scope, $http) {
-        $scope.activityType = $scope.getQueryString("activityType");
+      var app = angular.module("myReservationList", ['ngCookies']);
+      app.controller('myReservationListController', function ($cookies, $scope, $http) {
         $scope.reservationListForm = {};
         $scope.activityT = {
           "TEAM": "团",
@@ -45,7 +44,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/reserve/list?openId=' + $cookies.get('openId') + '&activityType=' + $scope.activityType,
+            url: 'http://yp.compass-trip.com/platform/reserve/myList?openId=' + $cookies.get('openId'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -57,8 +56,8 @@
           });
         };
 
-        $scope.reserve = function () {
-          var hre = 'reserve.html?activityType=' + $scope.activityType;
+        $scope.modify = function (reservationId) {
+          var hre = 'reservationModify.html?reservationInfoId=' + reservationId;
           location.href = hre;
         };
 
@@ -66,15 +65,6 @@
           location.href = 'reservation.html';
         };
 
-        $scope.getQueryString = function (name) {
-          var href = location.href.substr(location.href.indexOf("?") + 1);
-          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-          var r = href.match(reg);
-          if (r != null) {
-            return unescape(r[2]);
-          }
-          return null;
-        };
       });
 
     </script>
@@ -97,7 +87,7 @@
       <img class="header-image" src="img/hd-bg.jpeg">
     </div>
     <div class="middle">
-      <div ng-controller="reservationListController as reservationListVO" class="main" data-ng-init="load()">
+      <div ng-controller="myReservationListController as reservationListVO" class="main" data-ng-init="load()">
         <div>
           <table class=table8_1 style="margin-top: 10px">
             <tbody>
@@ -107,7 +97,7 @@
                 <th style="background-color:#fcc80a">预约日期</th>
                 <th style="background-color:#fcc80a">预约时间</th>
               </tr>
-              <tr ng-repeat="item in reservationListForm">
+              <tr ng-repeat="item in reservationListForm" ng-click="modify(item.reservationInfoId)">
                 <td hidden>{{item.reservationInfoId}}</td>
                 <td hidden>{{item.signIn}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.linkManName}}</td>
@@ -121,9 +111,6 @@
               </tr>
             </tbody>
           </table>
-          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
-                  ng-click="reserve()">预约
-          </button>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="goBack()">返回
           </button>

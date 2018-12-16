@@ -25,13 +25,13 @@
       var app = angular.module("reservation", ['ngCookies']);
       app.controller('reservationController', function ($cookies, $scope, $http) {
         $scope.openId = "";
-        $scope.reserveTeam = function () {
-          var hre = 'reserve.html?activityType=TEAM';
+        $scope.teamResource = function () {
+          var hre = 'reservationList.html?activityType=TEAM';
           location.href = hre;
         };
 
-        $scope.reserveSingle = function () {
-          var hre = 'reserve.html?activityType=SINGLE';
+        $scope.singleResource = function () {
+          var hre = 'reservationList.html?activityType=SINGLE';
           location.href = hre;
         };
 
@@ -103,8 +103,7 @@
         <dl class="more" title="预约一览">
           <dt><i></i></dt>
           <dd>
-            <a href="reservationList.html">预约查询</a>
-            <a href="reservationSignInList.html">参与的预约</a>
+            <a href="reservationList.html">我的预约</a>
           </dd>
         </dl>
       </div>
@@ -121,10 +120,10 @@
       <div ng-controller="reservationController" class="main2" data-ng-init="load()">
         <div>
           <div style="margin-top: 30px; margin-bottom: 20px">
-            <button class="button button-3d button-raised button-primary button-pill" ng-click="reserveTeam()">团队预约</button>
+            <button class="button button-3d button-raised button-primary button-pill" ng-click="teamResource()">团队预约</button>
           </div>
           <div style="margin-top: 10px; margin-bottom: 500px">
-            <button class="button button-3d button-raised button-primary button-pill" ng-click="reserveSingle()">个人预约</button>
+            <button class="button button-3d button-raised button-primary button-pill" ng-click="singleResource()">个人预约</button>
           </div>
         </div>
       </div>
