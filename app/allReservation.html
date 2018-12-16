@@ -107,6 +107,11 @@
         $scope.goBack = function () {
           location.href = 'boAdmin.html';
         };
+
+        $scope.detail = function (reservationId) {
+          var hre = 'reservationDetail.html?reservationInfoId=' + reservationId;
+          location.href = hre;
+        }
       });
 
     </script>
@@ -145,7 +150,7 @@
               <th style="background-color:#fcc80a">预定时间</th>
               <th style="background-color:#fcc80a">签到</th>
             </tr>
-            <tr ng-repeat="item in reservationListForm">
+            <tr ng-repeat="item in reservationListForm" ng-click="detail(item.reservationInfoId)">
               <td hidden>{{item.reservationInfoId}}</td>
               <td hidden>{{item.signIn}}</td>
               <td ng-if="$odd" style="background-color:lightgray">{{item.linkManName}}</td>

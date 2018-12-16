@@ -43,7 +43,6 @@
       var app = angular.module("reservationModify", ['ngCookies']);
       app.controller('reservationModifyController', function ($cookies, $scope, $http, $filter) {
         $scope.canModify = false;
-        $scope.canSignin = false;
         $scope.reserveVO.reservationInfoId = "";
         $scope.reserveVO.linkManName = "";
         $scope.reserveVO.sex = "MALE";
