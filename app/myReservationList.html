@@ -32,6 +32,8 @@
 
       var app = angular.module("myReservationList", ['ngCookies']);
       app.controller('myReservationListController', function ($cookies, $scope, $http) {
+        $scope.searchKey;
+        $scope.searchValue;
         $scope.reservationListForm = {};
         $scope.activityT = {
           "TEAM": "团",
@@ -52,7 +54,7 @@
           }).then(function (resp) {
             $scope.reservationListForm = resp.data;
           }, function (resp) {
-            alert("获取列表失败！服务调用失败！");
+            alert("服务调用失败！");
           });
         };
 
@@ -61,10 +63,39 @@
           location.href = hre;
         };
 
-        $scope.goBack = function (){
+        $scope.goBack = function () {
           location.href = 'reservation.html';
         };
 
+        $scope.searchReservation = function () {
+          if($scope.searchValue == null || $scope.searchValue == ''){
+            $http({
+              method: 'GET',
+              url: 'http://yp.compass-trip.com/platform/reserve/myList?openId=' + $cookies.get('openId'),
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+            }).then(function (resp) {
+              $scope.reservationListForm = resp.data;
+            }, function (resp) {
+              alert("服务调用失败！");
+            });
+          }else {
+            $http({
+              method: 'GET',
+              url: 'http://yp.compass-trip.com/platform/reserve/searchList?openId=' + $cookies.get('openId') + '&searchKey=' + $scope.searchKey + '&searchValue=' + $scope.searchValue,
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+            }).then(function (resp) {
+              $scope.reservationListForm = resp.data;
+            }, function (resp) {
+              alert("服务调用失败！");
+            });
+          }
+        };
       });
 
     </script>
@@ -89,11 +120,21 @@
     <div class="middle">
       <div ng-controller="myReservationListController as reservationListVO" class="main" data-ng-init="load()">
         <div>
+          <div>
+            <select ng-model="searchKey">
+              <option value="" disabled selected>查询字段</option>
+              <option value="linkManName">联系人</option>
+              <option value="phoneNumber">联系电话</option>
+            </select>
+            <input type="text" placeholder="查询内容" ng-model="searchValue" />
+            <button class="button button-3d button-box button-jumbo button-tiny" ng-click="searchReservation()">搜索</button>
+          </div>
           <table class=table8_1 style="margin-top: 10px">
             <tbody>
               <tr>
                 <th style="background-color:#fcc80a">联系人</th>
                 <th style="background-color:#fcc80a">类型</th>
+                <th style="background-color:#fcc80a">联系电话</th>
                 <th style="background-color:#fcc80a">预约日期</th>
                 <th style="background-color:#fcc80a">预约时间</th>
               </tr>
@@ -104,6 +145,8 @@
                 <td ng-if="$even">{{item.linkManName}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{activityT[item.activityType]}}</td>
                 <td ng-if="$even">{{activityT[item.activityType]}}</td>
+                <td ng-if="$odd" style="background-color:lightgray">{{item.phoneNumber}}</td>
+                <td ng-if="$even">{{item.phoneNumber}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$even">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>

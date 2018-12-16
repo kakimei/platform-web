@@ -148,7 +148,6 @@
         };
 
         $scope.reserveForm = function () {
-          var ts = $scope.reserveVO.timeString.substr(0, $scope.reserveVO.timeString.indexOf("times:"));
           $http({
             method: 'POST',
             url: 'http://yp.compass-trip.com/platform/reserve/update?openId=' + $cookies.get('openId'),
@@ -159,7 +158,7 @@
               "age": $scope.reserveVO.age,
               "phoneNumber": $scope.reserveVO.phoneNumber,
               "reserveDay": $scope.reserveVO.reserveDay,
-              "timeString": ts,
+              "timeString": $scope.reserveVO.timeString,
               "peopleCount": $scope.reserveVO.peopleCount,
               "activityType": $scope.reserveVO.activityType
             },
@@ -199,8 +198,15 @@
             for(var i = 16; i <= 50; i++)
               $scope.validPeopleRange.push(i);
           } else {
+            var peopleRange = 0;
             var timeString = $scope.reserveVO.timeString;
-            var peopleRange = timeString.substr(timeString.indexOf("times:") + 6);
+            for(var i = 0; i < $scope.validtime.length; i ++){
+              var vt = $scope.validtime[i];
+              if($scope.timeFormatString(vt.beginHour, vt.beginMinute, vt.endHour, vt.endMinute) == timeString){
+                peopleRange = vt.times;
+              }
+            }
+            peopleRange = parseInt(peopleRange) + parseInt($scope.reserveVO.peopleCount);
             for (var i = 1; i <= peopleRange; i++) {
               $scope.validPeopleRange.push(i);
             }
@@ -233,9 +239,6 @@
         };
 
         $scope.timeFormatString2 = function (timeString) {
-          if(timeString.indexOf("times:") != -1){
-            timeString = timeString.substr(0, timeString.indexOf("times:"));
-          }
           var hourBegin = timeString.substr(0, timeString.indexOf(":"));
           timeString = timeString.substr(timeString.indexOf(":") + 1);
           var minuteBegin = timeString.substr(0, timeString.indexOf(" ~ "));
@@ -313,7 +316,7 @@
               <select ng-model="reserveVO.timeString" ng-change="changeReserveTime()" required>
                 <option value="{{reserveVO.timeString}}" disabled selected>{{timeFormatString2(reserveVO.timeString)}}</option>
                 <option ng-repeat="t in validtime"
-                        value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute + 'times:' + t.times}}">
+                        value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute}}">
                   {{timeFormatString(t.beginHour, t.beginMinute, t.endHour, t.endMinute)}}
                 </option>
               </select>

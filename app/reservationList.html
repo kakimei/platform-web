@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/button.css">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
       table, td {
         border: 1px solid grey;
@@ -76,6 +77,25 @@
           }
           return null;
         };
+
+        $scope.thumbsUp = function (reservationInfoId) {
+          $http({
+            method: 'POST',
+            url: 'http://yp.compass-trip.com/platform/feedback/thumbsUp?openId=' + $cookies.get('openId'),
+            data: {
+              "reservationInfoId": reservationInfoId
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (resp) {
+            $scope.load();
+          }, function (resp) {
+            alert("获取列表失败！服务调用失败！");
+          });
+        }
+
       });
 
     </script>
@@ -107,6 +127,7 @@
                 <th style="background-color:#fcc80a">类型</th>
                 <th style="background-color:#fcc80a">预约日期</th>
                 <th style="background-color:#fcc80a">预约时间</th>
+                <th style="background-color:#fcc80a"></th>
               </tr>
               <tr ng-repeat="item in reservationListForm">
                 <td hidden>{{item.reservationInfoId}}</td>
@@ -119,6 +140,10 @@
                 <td ng-if="$even">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
                 <td ng-if="$even">{{item.timeString}}</td>
+                <td ng-if="$odd && item.hasFeedback" style="background-color:lightgray"><button class="button button-3d button-box button-tiny" disabled="disabled"><i class="fa fa-thumbs-up"></i></button></td>
+                <td ng-if="$odd && !item.hasFeedback" style="background-color:lightgray"><button class="button button-3d button-box button-tiny"><i class="fa fa-thumbs-up" ng-click="thumbsUp(item.reservationInfoId)"></i></button></td>
+                <td ng-if="$even && item.hasFeedback"><button class="button button-3d button-box button-tiny" disabled="disabled"><i class="fa fa-thumbs-up"></i></button></td>
+                <td ng-if="$even && !item.hasFeedback"><button class="button button-3d button-box button-tiny" ng-click="thumbsUp(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button></td>
               </tr>
             </tbody>
           </table>
