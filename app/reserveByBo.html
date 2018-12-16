@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="reservationDetail" lang="en">
+<html ng-app="reserveByBo" lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -19,13 +19,19 @@
       .int input {
         padding: 1px 1px;
         border: 1px solid #ccc;
-        height: 16px;
+        height: 30px;
       }
+
+      .int select {
+        padding: 1px 1px;
+        border: 1px solid #ccc;
+        height: 30px;
+      }
+
     </style>
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
     <script src="css/jquery.min.js"></script>
-    <script src="css/qrcode.min.js"></script>
     <script>
       $(function () {
         if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
@@ -40,55 +46,60 @@
         });
       });
 
-      var app = angular.module("reservationDetail", ['ngCookies']);
-      app.controller('reservationDetailController', function ($cookies, $scope, $http, $filter) {
+      var app = angular.module("reserveByBo", ['ngCookies']);
+      app.controller('reserveByBoController', function ($cookies, $scope, $http, $filter) {
         $scope.boToken = $cookies.get('boToken');
         $scope.boUser = $cookies.get('boUser');
         $scope.boRole = $cookies.get('boRole');
-        $scope.reserveVO.reservationInfoId = "";
         $scope.reserveVO.linkManName = "";
         $scope.reserveVO.sex = "MALE";
         $scope.reserveVO.age = "";
         $scope.reserveVO.phoneNumber = "";
         $scope.reserveVO.peopleCount = "";
         $scope.reserveVO.activityType = "TEAM";
+        $scope.reserveVO.reserveDay = "";
+        $scope.reserveVO.timeString = "";
         $scope.dateTimeList = "";
         $scope.dateList = new Array();
         $scope.validtime = "";
         $scope.validPeopleRange = new Array();
-        $scope.displayTimeString = "";
-          $scope.load = function () {
-          var href = location.href;
-          var urlValue = href.substr(href.indexOf("=") + 1);
-          $scope.reserveVO.reservationInfoId = urlValue;
+        $scope.reserveForm = function () {
+          var ts = $scope.reserveVO.timeString.substr(0, $scope.reserveVO.timeString.indexOf("times:"));
           $http({
-            method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/bo/reserve/modify?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
+            method: 'POST',
+            url: 'http://yp.compass-trip.com/platform/bo/reserve?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
+            data: {
+              "reservationInfoId": null,
+              "linkManName": $scope.reserveVO.linkManName,
+              "sex": $scope.reserveVO.sex,
+              "age": $scope.reserveVO.age,
+              "phoneNumber": $scope.reserveVO.phoneNumber,
+              "reserveDay": $scope.reserveVO.reserveDay,
+              "timeString": ts,
+              "peopleCount": $scope.reserveVO.peopleCount,
+              "activityType": $scope.reserveVO.activityType
+            },
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            if (resp.data != null) {
-              $scope.reserveVO.reservationInfoId = resp.data.reservationInfoId;
-              $scope.reserveVO.linkManName = resp.data.linkManName;
-              $scope.reserveVO.sex = resp.data.sex;
-              $scope.reserveVO.age = resp.data.age;
-              $scope.reserveVO.phoneNumber = resp.data.phoneNumber;
-              $scope.reserveVO.peopleCount = ""+resp.data.peopleCount;
-              $scope.reserveVO.activityType = resp.data.activityType;
-              $scope.reserveVO.reserveDay = $filter("date")(new Date(resp.data.reserveDay), "yyyy-MM-dd");
-              $scope.reserveVO.timeString = resp.data.timeString;
-              $scope.getValidDateTime();
+            if (resp.data == true) {
+              alert("预约成功！");
             } else {
-              alert("取得预约信息失败！");
+              alert("预约失败！");
             }
+            self.location = 'reservation.html';
           }, function (resp) {
             alert("服务调用失败！");
+            self.location = 'reservation.html';
           });
         };
 
-        $scope.getValidDateTime = function () {
+        $scope.load = function () {
+          var href = location.href;
+          var activityTypeValue = href.substr(href.indexOf("=") + 1);
+          $scope.reserveVO.activityType = activityTypeValue;
           var url = '';
           if ($scope.reserveVO.activityType == "TEAM") {
             url = 'http://yp.compass-trip.com/platform/bo/reserve/team/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
@@ -111,72 +122,10 @@
                 $scope.dateList.push(key);
               }
             }
-            $scope.changeReserveDate();
-            $scope.changeReserveTime();
           }, function (resp) {
             alert("服务调用失败！");
           });
 
-        };
-
-        $scope.goBack = function () {
-          self.location = 'allReservation.html';
-        };
-
-        $scope.cancel = function () {
-          $http({
-            method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/bo/reserve/cancel?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
-            data: {
-              "reservationInfoId": $scope.reserveVO.reservationInfoId
-            },
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          }).then(function (resp) {
-            if (resp.data != null && resp.data != '') {
-              alert("取消成功！");
-              self.location = 'allReservation.html';
-            } else {
-              alert("取消失败！");
-            }
-          }, function (resp) {
-            alert("服务调用失败！");
-            self.location = 'allReservation.html';
-          });
-        };
-
-        $scope.reserveForm = function () {
-          var ts = $scope.reserveVO.timeString.substr(0, $scope.reserveVO.timeString.indexOf("times:"));
-          $http({
-            method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/bo/reserve/update?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
-            data: {
-              "reservationInfoId": $scope.reserveVO.reservationInfoId,
-              "linkManName": $scope.reserveVO.linkManName,
-              "sex": $scope.reserveVO.sex,
-              "age": $scope.reserveVO.age,
-              "phoneNumber": $scope.reserveVO.phoneNumber,
-              "reserveDay": $scope.reserveVO.reserveDay,
-              "timeString": ts,
-              "peopleCount": $scope.reserveVO.peopleCount,
-              "activityType": $scope.reserveVO.activityType
-            },
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-          }).then(function (resp) {
-            if (resp.data == true) {
-              alert("修改成功！");
-            } else {
-              alert("修改失败！");
-            }
-          }, function (resp) {
-            alert("服务调用失败！");
-            self.location = 'allReservation.html';
-          });
         };
 
         $scope.changeReserveDate = function () {
@@ -230,27 +179,18 @@
           return result;
         };
 
-        $scope.timeFormatString2 = function (timeString) {
-          if(timeString.indexOf("times:") != -1){
-            timeString = timeString.substr(0, timeString.indexOf("times:"));
-          }
-          var hourBegin = timeString.substr(0, timeString.indexOf(":"));
-          timeString = timeString.substr(timeString.indexOf(":") + 1);
-          var minuteBegin = timeString.substr(0, timeString.indexOf(" ~ "));
-          timeString = timeString.substr(timeString.indexOf(" ~ ") + 3);
-          var hourEnd = timeString.substr(0, timeString.indexOf(":"));
-          var minuteEnd = timeString.substr(timeString.indexOf(":") + 1);
-          return $scope.timeFormatString(hourBegin, minuteBegin, hourEnd, minuteEnd);
-        };
+        $scope.goBack = function () {
+          location.href = 'allReservation.html';
+        }
       });
     </script>
-    <title>预约详细</title>
+    <title>资源预约</title>
   </head>
   <body>
     <div class="header">
       <div id="header">
         <a class="home" href="boAdmin.html" title="后台管理"><i></i></a>
-        <span id="lblTitle">预约详细</span>
+        <span id="lblTitle">预约系统</span>
         <dl class="more" title="">
           <dt><i></i></dt>
           <dd>
@@ -264,9 +204,9 @@
       <img class="header-image" src="img/hd-bg.jpeg">
     </div>
     <div class="middle">
-      <div ng-controller="reservationDetailController as reserveVO" class="main" data-ng-init="load()">
+      <div ng-controller="reserveByBoController as reserveVO" class="main" data-ng-init="load()">
         <div>
-          <form ng-submit="reserveForm()">
+          <form name="rForm" ng-submit="reserveForm()">
             <div class="int">
               <label>联系人姓名:</label>
               <input placeholder="请输入联系人姓名" type="text" ng-model="reserveVO.linkManName" required />
@@ -298,7 +238,7 @@
             <div class="int">
               <label>预约日期:</label>
               <select ng-model="reserveVO.reserveDay" ng-change="changeReserveDate()" required>
-                <option value="{{reserveVO.reserveDay}}" disabled selected>{{reserveVO.reserveDay | date:'yyyy-MM-dd'}}</option>
+                <option value="" disabled selected>请选择日期</option>
                 <option ng-repeat="d in dateList" value="{{d}}">{{d | date:'yyyy-MM-dd'}}
                 </option>
               </select>
@@ -306,7 +246,7 @@
             <div class="int">
               <label>预约时间段:</label>
               <select ng-model="reserveVO.timeString" ng-change="changeReserveTime()" required>
-                <option value="{{reserveVO.timeString}}" disabled selected>{{timeFormatString2(reserveVO.timeString)}}</option>
+                <option value="" disabled selected>请选择时间段</option>
                 <option ng-repeat="t in validtime"
                         value="{{t.beginHour + ':' + t.beginMinute + ' ~ ' + t.endHour + ':' + t.endMinute + 'times:' + t.times}}">
                   {{timeFormatString(t.beginHour, t.beginMinute, t.endHour, t.endMinute)}}
@@ -316,7 +256,7 @@
             <div class="int">
               <label>预约人数:</label>
               <select ng-model="reserveVO.peopleCount" required>
-                <option value="{{reserveVO.peopleCount}}" disabled selected>{{reserveVO.peopleCount}}</option>
+                <option value="" disabled selected>请选择人数</option>
                 <option ng-repeat="t in validPeopleRange" value="{{t}}">
                   {{t}}
                 </option>
@@ -328,10 +268,10 @@
               <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled />个人
             </div>
             <button type="submit" class="button button-glow button-rounded button-raised button-primary" style="margin-bottom: 10px">预约</button>
-            <button type="button" class="button button-glow button-rounded button-raised button-primary" style="margin-bottom: 10px" ng-click="goBack()">返回</button>
-            <button type="button" class="button button-glow button-rounded button-raised button-primary" style="margin-bottom: 10px" ng-click="cancel()">取消</button>
+            <button type="button" class="button button-glow button-border button-rounded button-primary" style="margin-bottom: 10px"
+                    ng-click="goBack()">返回
+            </button>
           </form>
-          <div id="qrcode"></div>
         </div>
       </div>
     </div>

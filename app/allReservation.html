@@ -111,6 +111,16 @@
         $scope.detail = function (reservationId) {
           var hre = 'reservationDetail.html?reservationInfoId=' + reservationId;
           location.href = hre;
+        };
+        
+        $scope.reserveTeam = function () {
+          var hre = 'reserveByBo.html?activityType=TEAM';
+          location.href = hre;
+        };
+
+        $scope.reserveSingle = function () {
+          var hre = 'reserveByBo.html?activityType=SINGLE';
+          location.href = hre;
         }
       });
 
@@ -175,15 +185,25 @@
               </td>
             </tr>
           </table>
-          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
-                  ng-click="exportAllReservation()">导出所有
-          </button>
-          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
-                  ng-click="exportReservationWithDate()">导出指定日期
-          </button>
-          <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
-                  ng-click="goBack()">返回
-          </button>
+          <div>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                    ng-click="exportAllReservation()">导出所有
+            </button>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                    ng-click="exportReservationWithDate()">导出指定日期
+            </button>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                    ng-click="goBack()">返回
+            </button>
+          </div>
+          <div>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                    ng-click="reserveTeam()">预约团队
+            </button>
+            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
+                    ng-click="reserveSingle()">预约个人
+            </button>
+          </div>
         </div>
       </div>
     </div>
