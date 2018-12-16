@@ -170,8 +170,10 @@
           }).then(function (resp) {
             if (resp.data == true) {
               alert("修改成功！");
+              self.location = 'myReservationList.html';
             } else {
               alert("修改失败！");
+              self.location = 'myReservationList.html';
             }
           }, function (resp) {
             alert("服务调用失败！");
