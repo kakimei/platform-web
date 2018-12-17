@@ -84,7 +84,7 @@
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            if (resp.data == true) {
+            if (resp.data != null) {
               alert("预约成功！");
             } else {
               alert("预约失败！");
