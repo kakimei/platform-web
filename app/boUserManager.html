@@ -65,7 +65,8 @@
             }
           }).then(function (resp) {
             if (resp.data == true) {
-              location.href = 'boUserManager.html';
+              alert("删除成功！");
+              $scope.load();
             }
           }, function (resp) {
             alert("获取列表失败！服务调用失败！");
