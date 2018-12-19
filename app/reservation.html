@@ -36,14 +36,17 @@
         };
 
         $scope.load = function () {
-          alert('load');
           // ----- mock ------
-          // $cookies.put("openId", "oFdKuxEvHHUdb72f-Z1eZg1DLdlY");
+          $cookies.put("openId", "oFdKuxEvHHUdb72f-Z1eZg1DLdlY");
           // ----- mock ------
           if($cookies.get('openId') != null){
             return;
           }
           var code = $scope.getQueryString("code");
+          if(code != null){
+            alert(code);
+            return;
+          }
           $http({
             method: 'GET',
             url: 'http://yp.compass-trip.com/platform/weixin/userInfo/get?code=' + code,
@@ -52,6 +55,7 @@
               'Accept': 'application/json'
             }
           }).then(function (resp) {
+            alert
             if (resp.data != null) {
               $scope.openId = resp.data.openid;
               $scope.registerAndLogin();
