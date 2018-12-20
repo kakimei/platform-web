@@ -67,7 +67,7 @@
           var ts = $scope.reserveVO.timeString.substr(0, $scope.reserveVO.timeString.indexOf("times:"));
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/bo/reserve?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
+            url: 'http://www.smart-boot.com/platform/bo/reserve?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
             data: {
               "reservationInfoId": null,
               "linkManName": $scope.reserveVO.linkManName,
@@ -102,9 +102,9 @@
           $scope.reserveVO.activityType = activityTypeValue;
           var url = '';
           if ($scope.reserveVO.activityType == "TEAM") {
-            url = 'http://yp.compass-trip.com/platform/bo/reserve/team/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
+            url = 'http://www.smart-boot.com/platform/bo/reserve/team/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
           } else {
-            url = 'http://yp.compass-trip.com/platform/bo/reserve/single/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
+            url = 'http://www.smart-boot.com/platform/bo/reserve/single/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
           }
 
           $http({

@@ -39,23 +39,18 @@
           // ----- mock ------
           // $cookies.put("openId", "oFdKuxEvHHUdb72f-Z1eZg1DLdlY");
           // ----- mock ------
-          // if($cookies.get('openId') != null){
-          //   return;
-          // }
-          var code = $scope.getQueryString("code");
-          if(code != null){
-            alert(code);
+          if($cookies.get('openId') != null){
             return;
           }
+          var code = $scope.getQueryString("code");
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/weixin/userInfo/get?code=' + code,
+            url: 'http://www.smart-boot.com/platform/weixin/userInfo/get?code=' + code,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
             }
           }).then(function (resp) {
-            alert
             if (resp.data != null) {
               $scope.openId = resp.data.openid;
               $scope.registerAndLogin();
@@ -70,7 +65,7 @@
         $scope.registerAndLogin = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/user/login',
+            url: 'http://www.smart-boot.com/platform/user/login',
             data: {
               "userName": $scope.openId
             },

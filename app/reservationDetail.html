@@ -63,7 +63,7 @@
           $scope.reserveVO.reservationInfoId = urlValue;
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/bo/reserve/modify?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
+            url: 'http://www.smart-boot.com/platform/bo/reserve/modify?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -91,9 +91,9 @@
         $scope.getValidDateTime = function () {
           var url = '';
           if ($scope.reserveVO.activityType == "TEAM") {
-            url = 'http://yp.compass-trip.com/platform/bo/reserve/team/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
+            url = 'http://www.smart-boot.com/platform/bo/reserve/team/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
           } else {
-            url = 'http://yp.compass-trip.com/platform/bo/reserve/single/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
+            url = 'http://www.smart-boot.com/platform/bo/reserve/single/validDateTime?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser;
           }
 
           $http({
@@ -126,7 +126,7 @@
         $scope.cancel = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/bo/reserve/cancel?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
+            url: 'http://www.smart-boot.com/platform/bo/reserve/cancel?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -150,7 +150,7 @@
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/bo/reserve/update?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
+            url: 'http://www.smart-boot.com/platform/bo/reserve/update?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId,
               "linkManName": $scope.reserveVO.linkManName,

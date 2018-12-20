@@ -14,7 +14,7 @@
       app.controller('QrController', function ($scope, $http) {
         $scope.load = function () {
           var reservationInfoId = $scope.getQueryString('reservationInfoId');
-          var qrcode = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22d16b90c898f61d&redirect_uri=http%3A%2F%2Fyp.compass-trip.com%2FsignIn.html?reservationInfoId="+reservationInfoId+"&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
+          var qrcode = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22d16b90c898f61d&redirect_uri=http%3A%2F%2Fwww.smart-boot.com%2FsignIn.html?reservationInfoId="+reservationInfoId+"&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
           new QRCode(document.getElementById("qrcode"), qrcode);
         };
 

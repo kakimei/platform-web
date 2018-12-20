@@ -45,7 +45,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/reserve/mySignInlist?openId=' + $cookies.get('openId'),
+            url: 'http://www.smart-boot.com/platform/reserve/mySignInlist?openId=' + $cookies.get('openId'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -68,7 +68,7 @@
         $scope.thumbsUp = function (reservationInfoId) {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/feedback/thumbsUp?openId=' + $cookies.get('openId'),
+            url: 'http://www.smart-boot.com/platform/feedback/thumbsUp?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": reservationInfoId
             },

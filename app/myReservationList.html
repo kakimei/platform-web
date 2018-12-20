@@ -46,7 +46,7 @@
         $scope.load = function () {
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/reserve/myList?openId=' + $cookies.get('openId'),
+            url: 'http://www.smart-boot.com/platform/reserve/myList?openId=' + $cookies.get('openId'),
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -71,7 +71,7 @@
           if($scope.searchValue == null || $scope.searchValue == ''){
             $http({
               method: 'GET',
-              url: 'http://yp.compass-trip.com/platform/reserve/myList?openId=' + $cookies.get('openId'),
+              url: 'http://www.smart-boot.com/platform/reserve/myList?openId=' + $cookies.get('openId'),
               headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -84,7 +84,7 @@
           }else {
             $http({
               method: 'GET',
-              url: 'http://yp.compass-trip.com/platform/reserve/searchList?openId=' + $cookies.get('openId') + '&searchKey=' + $scope.searchKey + '&searchValue=' + $scope.searchValue,
+              url: 'http://www.smart-boot.com/platform/reserve/searchList?openId=' + $cookies.get('openId') + '&searchKey=' + $scope.searchKey + '&searchValue=' + $scope.searchValue,
               headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'

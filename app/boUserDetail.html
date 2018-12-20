@@ -59,7 +59,7 @@
           var boUserId = $scope.getQueryString('boUserId');
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/bo/user/find?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser + '&boUserId=' + boUserId,
+            url: 'http://www.smart-boot.com/platform/bo/user/find?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser + '&boUserId=' + boUserId,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -90,7 +90,7 @@
         $scope.updateBoUserForm = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/bo/user/update?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
+            url: 'http://www.smart-boot.com/platform/bo/user/update?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
             data: {
               "boUserId": $scope.boUserVO.boUserId,
               "boUserName": $scope.boUserVO.boUserName,
@@ -115,7 +115,7 @@
         $scope.resetPassword = function(){
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/bo/user/password/reset?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
+            url: 'http://www.smart-boot.com/platform/bo/user/password/reset?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
             data: {
               "boUserId": $scope.boUserVO.boUserId
             },

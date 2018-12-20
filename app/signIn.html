@@ -15,7 +15,7 @@
           $scope.reservationInfoId = $scope.getQueryString("reservationInfoId");
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/weixin/userInfo/get?code=' + code,
+            url: 'http://www.smart-boot.com/platform/weixin/userInfo/get?code=' + code,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -35,7 +35,7 @@
         $scope.registerAndLogin = function () {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/user/login',
+            url: 'http://www.smart-boot.com/platform/user/login',
             data: {
               "userName": $scope.openId
             },
@@ -55,7 +55,7 @@
         $scope.singIn = function (reservationInfoId) {
           $http({
             method: 'POST',
-            url: 'http://yp.compass-trip.com/platform/sign?openId=' + $cookies.get('openId'),
+            url: 'http://www.smart-boot.com/platform/sign?openId=' + $cookies.get('openId'),
             data: {
               "reservationInfoId": $scope.reservationInfoId
             },

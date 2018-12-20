@@ -42,7 +42,7 @@
           var boRole = $cookies.get('boRole');
           $http({
             method: 'GET',
-            url: 'http://yp.compass-trip.com/platform/bo/reserve/alllist?boUserToken=' + boToken + '&boUser=' + boUser,
+            url: 'http://www.smart-boot.com/platform/bo/reserve/alllist?boUserToken=' + boToken + '&boUser=' + boUser,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -65,10 +65,10 @@
           var selectReservationDate = $scope.selectReservationDate;
           var url = '';
           if (selectReservationDate == null || selectReservationDate == '') {
-            url = 'http://yp.compass-trip.com/platform/bo/reserve/alllist?boUserToken=' + boToken + '&boUser=' + boUser;
+            url = 'http://www.smart-boot.com/platform/bo/reserve/alllist?boUserToken=' + boToken + '&boUser=' + boUser;
           } else {
             var date = $filter('date')(selectReservationDate, 'yyyy-MM-dd');
-            url = 'http://yp.compass-trip.com/platform/bo/reserve/' + date + '/list?boUserToken=' + boToken + '&boUser=' + boUser;
+            url = 'http://www.smart-boot.com/platform/bo/reserve/' + date + '/list?boUserToken=' + boToken + '&boUser=' + boUser;
           }
           $http({
             method: 'GET',
@@ -88,7 +88,7 @@
           var boToken = $cookies.get('boToken');
           var boUser = $cookies.get('boUser');
           var boRole = $cookies.get('boRole');
-          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/all?boUserToken=' + boToken + '&boUser=' + boUser;
+          self.location = 'http://www.smart-boot.com/platform/bo/output/reservation/excel/all?boUserToken=' + boToken + '&boUser=' + boUser;
         };
 
         $scope.exportReservationWithDate = function () {
@@ -101,7 +101,7 @@
             return;
           }
           var date = $filter('date')(selectReservationDate, 'yyyy-MM-dd');
-          self.location = 'http://yp.compass-trip.com/platform/bo/output/reservation/excel/date?reserveDate=' + date + '&boUserToken=' + boToken + '&boUser=' + boUser;
+          self.location = 'http://www.smart-boot.com/platform/bo/output/reservation/excel/date?reserveDate=' + date + '&boUserToken=' + boToken + '&boUser=' + boUser;
         };
 
         $scope.goBack = function () {
