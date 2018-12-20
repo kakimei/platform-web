@@ -43,6 +43,7 @@
             return;
           }
           var code = $scope.getQueryString("code");
+          alert(code);
           $http({
             method: 'GET',
             url: 'http://www.smart-boot.com/platform/weixin/userInfo/get?code=' + code,
