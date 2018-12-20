@@ -83,7 +83,7 @@
           }).then(function (resp) {
             if (resp.data != null) {
               alert("预约成功！");
-              self.location = 'https://mp.weixin.qq.com/mp/subscribemsg?action=get_confirm&appid=wx22d16b90c898f61d&scene=1000&template_id=vaJ7xwom1Pit_ShMmyN0tKkAiR7U4mlAd-ZCSY6XEpc&redirect_url=http%3a%2f%2fwww.smart-boot.com%2fplatform%2fweixin%2fmessage%2fsend?reservationInfoId='+resp.data+'#wechat_redirect';
+              self.location = 'https://mp.weixin.qq.com/mp/subscribemsg?action=get_confirm&appid=wx22d16b90c898f61d&scene=1000&template_id=vaJ7xwom1Pit_ShMmyN0tKkAiR7U4mlAd-ZCSY6XEpc&redirect_url=http%3a%2f%2fwww.smart-boot.com%2fplatform%2fweixin%2fmessage%2fsend?openId='+$cookies.get('openId')+'&reservationInfoId='+resp.data+'#wechat_redirect';
             } else {
               alert("预约失败！");
               self.location = 'reservation.html';
