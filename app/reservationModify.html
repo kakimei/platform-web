@@ -61,7 +61,7 @@
           $scope.reserveVO.reservationInfoId = urlValue;
           $http({
             method: 'GET',
-            url: 'http://www.smart-boot.com/platform/reserve/modify?openId=' + $cookies.get('openId') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
+            url: 'http://www.smart-boot.com/platform/reserve/modify?openid=' + $cookies.get('openid') + '&reservationInfoId=' + $scope.reserveVO.reservationInfoId,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -91,9 +91,9 @@
         $scope.getValidDateTime = function () {
           var url = '';
           if ($scope.reserveVO.activityType == "TEAM") {
-            url = 'http://www.smart-boot.com/platform/reserve/team/validDateTime?openId=' + $cookies.get('openId');
+            url = 'http://www.smart-boot.com/platform/reserve/team/validDateTime?openid=' + $cookies.get('openid');
           } else {
-            url = 'http://www.smart-boot.com/platform/reserve/single/validDateTime?openId=' + $cookies.get('openId');
+            url = 'http://www.smart-boot.com/platform/reserve/single/validDateTime?openid=' + $cookies.get('openid');
           }
 
           $http({
@@ -126,7 +126,7 @@
         $scope.cancel = function () {
           $http({
             method: 'POST',
-            url: 'http://www.smart-boot.com/platform/reserve/cancel?openId=' + $cookies.get('openId'),
+            url: 'http://www.smart-boot.com/platform/reserve/cancel?openid=' + $cookies.get('openid'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId
             },
@@ -150,7 +150,7 @@
         $scope.reserveForm = function () {
           $http({
             method: 'POST',
-            url: 'http://www.smart-boot.com/platform/reserve/update?openId=' + $cookies.get('openId'),
+            url: 'http://www.smart-boot.com/platform/reserve/update?openid=' + $cookies.get('openid'),
             data: {
               "reservationInfoId": $scope.reserveVO.reservationInfoId,
               "linkManName": $scope.reserveVO.linkManName,

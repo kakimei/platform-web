@@ -47,7 +47,7 @@
           $scope.activityType = $scope.getQueryString("activityType");
           $http({
             method: 'GET',
-            url: 'http://www.smart-boot.com/platform/reserve/list?openId=' + $cookies.get('openId') + '&activityType=' + $scope.activityType,
+            url: 'http://www.smart-boot.com/platform/reserve/list?openid=' + $cookies.get('openid') + '&activityType=' + $scope.activityType,
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -81,7 +81,7 @@
         $scope.thumbsUp = function (reservationInfoId) {
           $http({
             method: 'POST',
-            url: 'http://www.smart-boot.com/platform/feedback/thumbsUp?openId=' + $cookies.get('openId'),
+            url: 'http://www.smart-boot.com/platform/feedback/thumbsUp?openid=' + $cookies.get('openid'),
             data: {
               "reservationInfoId": reservationInfoId
             },

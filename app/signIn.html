@@ -22,7 +22,7 @@
             }
           }).then(function (resp) {
             if (resp.data != null) {
-              $scope.openId = resp.data.openid;
+              $scope.openid = resp.data.openid;
               $scope.registerAndLogin();
             } else {
               alert("签到失败");
@@ -37,7 +37,7 @@
             method: 'POST',
             url: 'http://www.smart-boot.com/platform/user/login',
             data: {
-              "userName": $scope.openId
+              "userName": $scope.openid
             },
             headers: {
               'Content-Type': 'application/json',
@@ -45,7 +45,7 @@
             }
           }).then(function (resp) {
             var userName = resp.data.userName;
-            $cookies.put("openId", userName);
+            $cookies.put("openid", userName);
             $scope.singIn()
           }, function (resp) {
             alert("登录失败！服务调用失败！");
@@ -55,7 +55,7 @@
         $scope.singIn = function (reservationInfoId) {
           $http({
             method: 'POST',
-            url: 'http://www.smart-boot.com/platform/sign?openId=' + $cookies.get('openId'),
+            url: 'http://www.smart-boot.com/platform/sign?openid=' + $cookies.get('openid'),
             data: {
               "reservationInfoId": $scope.reservationInfoId
             },
