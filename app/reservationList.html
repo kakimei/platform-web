@@ -99,6 +99,21 @@
       });
 
     </script>
+    <style>
+      table tbody {
+        display: block;
+        height: 300px;
+        overflow-y: scroll;
+      }
+
+      table thead,
+      tbody tr {
+        display: table;
+        width: 100%;
+        table-layout:fixed;
+      }
+
+    </style>
     <title>预约记录一览</title>
   </head>
   <body>
@@ -121,7 +136,7 @@
       <div ng-controller="reservationListController as reservationListVO" class="main" data-ng-init="load()">
         <div>
           <table class=table8_1 style="margin-top: 10px">
-            <tbody>
+            <thead>
               <tr>
                 <th style="background-color:#fcc80a">联系人</th>
                 <th style="background-color:#fcc80a">类型</th>
@@ -129,6 +144,8 @@
                 <th style="background-color:#fcc80a">预约时间</th>
                 <th style="background-color:#fcc80a"></th>
               </tr>
+            </thead>
+            <tbody>
               <tr ng-repeat="item in reservationListForm">
                 <td hidden>{{item.reservationInfoId}}</td>
                 <td hidden>{{item.signIn}}</td>
