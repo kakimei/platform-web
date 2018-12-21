@@ -170,10 +170,10 @@
           <table class=table8_1 style="margin-top: 10px; margin-bottom: 10px">
             <thead>
               <tr>
-                <th style="background-color:#fcc80a">联系人</th>
-                <th style="background-color:#fcc80a">类型</th>
-                <th style="background-color:#fcc80a">预定日期</th>
-                <th style="background-color:#fcc80a">预定时间</th>
+                <th style="background-color:#fcc80a; width: 60px;">联系人</th>
+                <th style="background-color:#fcc80a; width: 28px;">类型</th>
+                <th style="background-color:#fcc80a; width: 55px;">预定日期</th>
+                <th style="background-color:#fcc80a; width: 100px;">预定时间</th>
                 <th style="background-color:#fcc80a">签到</th>
               </tr>
             </thead>
@@ -181,14 +181,14 @@
               <tr ng-repeat="item in reservationListForm">
                 <td hidden>{{item.reservationInfoId}}</td>
                 <td hidden>{{item.signIn}}</td>
-                <td ng-if="$odd" style="background-color:lightgray" ng-click="detail(item.reservationInfoId)">{{item.linkManName}}</td>
-                <td ng-if="$even" ng-click="detail(item.reservationInfoId)">{{item.linkManName}}</td>
-                <td ng-if="$odd" style="background-color:lightgray" ng-click="detail(item.reservationInfoId)">{{activityT[item.activityType]}}</td>
-                <td ng-if="$even" ng-click="detail(item.reservationInfoId)">{{activityT[item.activityType]}}</td>
-                <td ng-if="$odd" style="background-color:lightgray" ng-click="detail(item.reservationInfoId)">{{item.reserveDay | date:'MM/dd'}}</td>
-                <td ng-if="$even" ng-click="detail(item.reservationInfoId)">{{item.reserveDay | date:'MM/dd'}}</td>
-                <td ng-if="$odd" style="background-color:lightgray" ng-click="detail(item.reservationInfoId)">{{item.timeString}}</td>
-                <td ng-if="$even" ng-click="detail(item.reservationInfoId)">{{item.timeString}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 60px;" ng-click="detail(item.reservationInfoId)">{{item.linkManName}}</td>
+                <td ng-if="$even" style="width: 60px;" ng-click="detail(item.reservationInfoId)">{{item.linkManName}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 28px;" ng-click="detail(item.reservationInfoId)">{{activityT[item.activityType]}}</td>
+                <td ng-if="$even" style="width: 28px;" ng-click="detail(item.reservationInfoId)">{{activityT[item.activityType]}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 55px;" ng-click="detail(item.reservationInfoId)">{{item.reserveDay | date:'MM/dd'}}</td>
+                <td ng-if="$even" style="width: 55px;" ng-click="detail(item.reservationInfoId)">{{item.reserveDay | date:'MM/dd'}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 100px;" ng-click="detail(item.reservationInfoId)">{{item.timeString}}</td>
+                <td ng-if="$even" style="width: 100px;" ng-click="detail(item.reservationInfoId)">{{item.timeString}}</td>
                 <td ng-if="$odd && (item.inactiveTime)" style="background-color:lightgray">
                   <button class="button button-3d button-box button-jumbo button-tiny" disabled="disabled">签</button>
                 </td>
