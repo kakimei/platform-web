@@ -61,6 +61,10 @@
         $scope.validtime = "";
         $scope.validPeopleRange = new Array();
         $scope.reserveForm = function () {
+          if(!$scope.validate()){
+            alert("请填入正确值！");
+            return;
+          }
           var ts = $scope.reserveVO.timeString.substr(0, $scope.reserveVO.timeString.indexOf("times:"));
           $http({
             method: 'POST',
@@ -94,6 +98,15 @@
           });
         };
 
+        $scope.validate = function(){
+          if($scope.rForm.age1.$error.minlength||$scope.rForm.age1.$error.maxlength){
+            return false;
+          }
+          if($scope.rForm.tel1.$error.required || $scope.rForm.tel1.$error.minlength||$scope.rForm.tel1.$error.maxlength||$scope.rForm.tel1.$error.pattern){
+            return false;
+          }
+          return true;
+        }
         $scope.load = function () {
           var href = location.href;
           var activityTypeValue = href.substr(href.indexOf("=") + 1);
@@ -217,7 +230,7 @@
               <label>年龄:</label><input name="age1" placeholder="请输入年龄" type="number" ng-minlength="1" ng-maxlength="2" ng-model="reserveVO.age" />
               <div class="col-xs-12">
                 <p class="text-danger glyphicon glyphicon-remove"
-                   ng-if="(rForm.age1.$error.minlength||rForm.age1.$error.maxlength)&&rForm.age1.$touched">请输入有效年龄!</p>
+                   ng-if="(rForm.age1.$error.minlength||rForm.age1.$error.maxlength)&&rForm.age1.$touched" style="color: red;">请输入有效年龄!</p>
               </div>
             </div>
             <div class="int">
@@ -227,9 +240,9 @@
                 <p class="glyphicon glyphicon-ok input_result text-success"
                    ng-if="rForm.tel1.$valid"></p>
                 <p class="text-danger glyphicon glyphicon-remove"
-                   ng-if="rForm.tel1.$error.required&&rForm.tel1.$touched">电话不能为空！</p>
+                   ng-if="rForm.tel1.$error.required&&rForm.tel1.$touched" style="color: red;">电话不能为空！</p>
                 <p class="text-danger glyphicon glyphicon-remove"
-                   ng-if="(rForm.tel1.$error.minlength||rForm.tel1.$error.maxlength||rForm.tel1.$error.pattern)&&rForm.tel1.$touched">请输入有效手机号!</p>
+                   ng-if="(rForm.tel1.$error.minlength||rForm.tel1.$error.maxlength||rForm.tel1.$error.pattern)&&rForm.tel1.$touched" style="color: red;">请输入有效手机号!</p>
               </div>
             </div>
             <div class="int">
