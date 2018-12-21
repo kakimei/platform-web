@@ -5,13 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/button.css">
-    <style>
-      table, td {
-        border: 1px solid grey;
-        border-collapse: collapse;
-        padding: 5px;
-      }
-    </style>
+
     <style>
       table tbody {
         display: block;
@@ -23,7 +17,7 @@
       tbody tr {
         display: table;
         width: 100%;
-        table-layout:fixed;
+        table-layout: fixed;
       }
 
     </style>
@@ -141,18 +135,16 @@
               <option value="linkManName">联系人</option>
               <option value="phoneNumber">联系电话</option>
             </select>
-            <div style="display: inline-block">
-              <input type="text" placeholder="查询内容" ng-model="searchValue" />
-              <button class="button button-3d button-box button-jumbo button-tiny" ng-click="searchReservation()">搜索</button>
-            </div>
+            <input type="text" placeholder="查询内容" ng-model="searchValue" />
+            <button class="button button-3d button-box button-jumbo button-tiny" ng-click="searchReservation()">搜索</button>
           </div>
           <table class=table8_1 style="margin-top: 10px">
             <thead>
               <tr>
-                <th style="background-color:#fcc80a">联系人</th>
-                <th style="background-color:#fcc80a">类型</th>
-                <th style="background-color:#fcc80a">联系电话</th>
-                <th style="background-color:#fcc80a">预约日期</th>
+                <th style="background-color:#fcc80a; width: 40px;">联系人</th>
+                <th style="background-color:#fcc80a; width: 28px;">类型</th>
+                <th style="background-color:#fcc80a; width: 90px;">联系电话</th>
+                <th style="background-color:#fcc80a; width: 55px;">预约日期</th>
                 <th style="background-color:#fcc80a">预约时间</th>
               </tr>
             </thead>
@@ -160,18 +152,18 @@
               <tr ng-repeat="item in reservationListForm" ng-click="modify(item.reservationInfoId)">
                 <td hidden>{{item.reservationInfoId}}</td>
                 <td hidden>{{item.signIn}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.linkManName}}</td>
-                <td ng-if="$even">{{item.linkManName}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{activityT[item.activityType]}}</td>
-                <td ng-if="$even">{{activityT[item.activityType]}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.phoneNumber}}</td>
-                <td ng-if="$even">{{item.phoneNumber}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.reserveDay | date:'MM/dd'}}</td>
-                <td ng-if="$even">{{item.reserveDay | date:'MM/dd'}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 40px;">{{item.linkManName}}</td>
+                <td ng-if="$even" style="width: 40px;">{{item.linkManName}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 28px;">{{activityT[item.activityType]}}</td>
+                <td ng-if="$even" style="width: 28px;">{{activityT[item.activityType]}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 90px;">{{item.phoneNumber}}</td>
+                <td ng-if="$even" style="width: 90px;">{{item.phoneNumber}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
+                <td ng-if="$even" style="width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
                 <td ng-if="$even">{{item.timeString}}</td>
               </tr>
-            </tbody>>
+            </tbody>
           </table>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="goBack()">返回

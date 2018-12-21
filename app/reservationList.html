@@ -138,10 +138,10 @@
           <table class=table8_1 style="margin-top: 10px">
             <thead>
               <tr>
-                <th style="background-color:#fcc80a">联系人</th>
-                <th style="background-color:#fcc80a">类型</th>
-                <th style="background-color:#fcc80a">预约日期</th>
-                <th style="background-color:#fcc80a">预约时间</th>
+                <th style="background-color:#fcc80a; width: 60px;">联系人</th>
+                <th style="background-color:#fcc80a; width: 28px;">类型</th>
+                <th style="background-color:#fcc80a; width: 55px;">预约日期</th>
+                <th style="background-color:#fcc80a; width: 100px;">预约时间</th>
                 <th style="background-color:#fcc80a"></th>
               </tr>
             </thead>
@@ -149,14 +149,14 @@
               <tr ng-repeat="item in reservationListForm">
                 <td hidden>{{item.reservationInfoId}}</td>
                 <td hidden>{{item.signIn}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.linkManName}}</td>
-                <td ng-if="$even">{{item.linkManName}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{activityT[item.activityType]}}</td>
-                <td ng-if="$even">{{activityT[item.activityType]}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.reserveDay | date:'MM/dd'}}</td>
-                <td ng-if="$even">{{item.reserveDay | date:'MM/dd'}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
-                <td ng-if="$even">{{item.timeString}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 60px;">{{item.linkManName}}</td>
+                <td ng-if="$even" style="width: 60px;">{{item.linkManName}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 28px;">{{activityT[item.activityType]}}</td>
+                <td ng-if="$even" style="width: 28px;">{{activityT[item.activityType]}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
+                <td ng-if="$even" style="width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 100px;">{{item.timeString}}</td>
+                <td ng-if="$even" style="width: 100px;">{{item.timeString}}</td>
                 <td ng-if="$odd && item.hasFeedback" style="background-color:lightgray"><button class="button button-3d button-box button-tiny" disabled="disabled"><i class="fa fa-thumbs-up"></i></button></td>
                 <td ng-if="$odd && !item.hasFeedback" style="background-color:lightgray"><button class="button button-3d button-box button-tiny"><i class="fa fa-thumbs-up" ng-click="thumbsUp(item.reservationInfoId)"></i></button></td>
                 <td ng-if="$even && item.hasFeedback"><button class="button button-3d button-box button-tiny" disabled="disabled"><i class="fa fa-thumbs-up"></i></button></td>
