@@ -12,6 +12,21 @@
         padding: 5px;
       }
     </style>
+    <style>
+      table tbody {
+        display: block;
+        height: 500px;
+        overflow-y: scroll;
+      }
+
+      table thead,
+      tbody tr {
+        display: table;
+        width: 100%;
+        table-layout:fixed;
+      }
+
+    </style>
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
     <script src="css/jquery.min.js"></script>
@@ -132,7 +147,7 @@
             </div>
           </div>
           <table class=table8_1 style="margin-top: 10px">
-            <tbody>
+            <thead>
               <tr>
                 <th style="background-color:#fcc80a">联系人</th>
                 <th style="background-color:#fcc80a">类型</th>
@@ -140,6 +155,8 @@
                 <th style="background-color:#fcc80a">预约日期</th>
                 <th style="background-color:#fcc80a">预约时间</th>
               </tr>
+            </thead>
+            <tbody>
               <tr ng-repeat="item in reservationListForm" ng-click="modify(item.reservationInfoId)">
                 <td hidden>{{item.reservationInfoId}}</td>
                 <td hidden>{{item.signIn}}</td>
@@ -154,7 +171,7 @@
                 <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
                 <td ng-if="$even">{{item.timeString}}</td>
               </tr>
-            </tbody>
+            </tbody>>
           </table>
           <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                   ng-click="goBack()">返回
