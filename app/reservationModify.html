@@ -206,10 +206,9 @@
                 peopleRange = vt.times;
               }
             }
-            if(parseInt(peopleRange) > parseInt($scope.reserveVO.peopleCount)){
-              peopleRange = parseInt(peopleRange);
-            }else{
-              peopleRange = parseInt($scope.reserveVO.peopleCount);
+            peopleRange = parseInt(peopleRange) + parseInt($scope.reserveVO.peopleCount);
+            if(peopleRange > 15){
+              peopleRange = 15
             }
             for (var i = 1; i <= peopleRange; i++) {
               $scope.validPeopleRange.push(i);
