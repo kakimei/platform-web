@@ -139,7 +139,7 @@
             <thead>
               <tr>
                 <th style="background-color:#fcc80a; width: 58px;">联系人</th>
-                <th style="background-color:#fcc80a; width: 28px;">类型</th>
+                <th style="background-color:#fcc80a; width: 14px;">类</th>
                 <th style="background-color:#fcc80a; width: 28px;">人数</th>
                 <th style="background-color:#fcc80a; width: 40px;">日期</th>
                 <th style="background-color:#fcc80a; width: 95px;">预约时间</th>
@@ -152,8 +152,8 @@
                 <td hidden>{{item.signIn}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 58px;">{{item.linkManName}}</td>
                 <td ng-if="$even" style="width: 58px;">{{item.linkManName}}</td>
-                <td ng-if="$odd" style="background-color:lightgray; width: 28px;">{{activityT[item.activityType]}}</td>
-                <td ng-if="$even" style="width: 28px;">{{activityT[item.activityType]}}</td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 14px;">{{activityT[item.activityType]}}</td>
+                <td ng-if="$even" style="width: 14px;">{{activityT[item.activityType]}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 28px;">{{item.peopleCount}}</td>
                 <td ng-if="$even" style="width: 28px;">{{item.peopleCount}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 40px;">{{item.reserveDay | date:'MM/dd'}}</td>
