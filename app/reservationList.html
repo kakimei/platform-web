@@ -157,10 +157,10 @@
                 <td ng-if="$even" style="width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 100px;">{{item.timeString}}</td>
                 <td ng-if="$even" style="width: 100px;">{{item.timeString}}</td>
-                <td ng-if="$odd && item.hasFeedback" style="background-color:lightgray"><button class="button button-3d button-box button-tiny" disabled="disabled"><i class="fa fa-thumbs-up"></i></button></td>
-                <td ng-if="$odd && !item.hasFeedback" style="background-color:lightgray"><button class="button button-3d button-box button-tiny"><i class="fa fa-thumbs-up" ng-click="thumbsUp(item.reservationInfoId)"></i></button></td>
-                <td ng-if="$even && item.hasFeedback"><button class="button button-3d button-box button-tiny" disabled="disabled"><i class="fa fa-thumbs-up"></i></button></td>
-                <td ng-if="$even && !item.hasFeedback"><button class="button button-3d button-box button-tiny" ng-click="thumbsUp(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button></td>
+                <td ng-if="$odd && (!item.hasSigned || item.hasFeedback)" style="background-color:lightgray"><button class="button button-3d button-box button-tiny" disabled="disabled"><i class="fa fa-thumbs-up"></i></button></td>
+                <td ng-if="$odd && item.hasSigned && !item.hasFeedback" style="background-color:lightgray"><button class="button button-3d button-box button-tiny"><i class="fa fa-thumbs-up" ng-click="thumbsUp(item.reservationInfoId)"></i></button></td>
+                <td ng-if="$even && (!item.hasSigned || item.hasFeedback)"><button class="button button-3d button-box button-tiny" disabled="disabled"><i class="fa fa-thumbs-up"></i></button></td>
+                <td ng-if="$even && item.hasSigned && !item.hasFeedback"><button class="button button-3d button-box button-tiny" ng-click="thumbsUp(item.reservationInfoId)"><i class="fa fa-thumbs-up"></i></button></td>
               </tr>
             </tbody>
           </table>
