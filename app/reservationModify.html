@@ -151,6 +151,10 @@
             };
 
             $scope.reserveForm = function () {
+                if (!$scope.validate()) {
+                    alert("请填入正确值！");
+                    return;
+                }
                 $http({
                     method: 'POST',
                     url: 'http://www.smart-boot.com/platform/reserve/update?openid=' + $cookies.get('openid'),
@@ -182,6 +186,19 @@
                     alert("服务调用失败！");
                     self.location = 'myReservationList.html';
                 });
+            };
+
+            $scope.validate = function () {
+                if ($scope.rForm.age1.$error.minlength || $scope.rForm.age1.$error.maxlength) {
+                    return false;
+                }
+                if ($scope.rForm.tel1.$error.required || $scope.rForm.tel1.$error.minlength || $scope.rForm.tel1.$error.maxlength || $scope.rForm.tel1.$error.pattern) {
+                    return false;
+                }
+                if (!$scope.personNumCheck()){
+                    return false;
+                }
+                return true;
             };
 
             $scope.changeReserveDate = function () {
@@ -462,7 +479,7 @@
 <div class="middle">
     <div ng-controller="reservationModifyController as reserveVO" class="main" data-ng-init="load()">
         <div>
-            <form ng-submit="reserveForm()">
+            <form name="rForm" ng-submit="reserveForm()">
                 <div class="int">
                     <label>联系人姓名:</label>
                     <input placeholder="请输入联系人姓名" type="text" ng-model="reserveVO.linkManName" required/>

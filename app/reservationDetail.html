@@ -150,6 +150,11 @@
         };
 
         $scope.reserveForm = function () {
+          if (!$scope.validate()) {
+            alert("请填入正确值！");
+            return;
+          }
+
           $http({
             method: 'POST',
             url: 'http://www.smart-boot.com/platform/bo/reserve/update?boUserToken=' + $scope.boToken + '&boUser=' + $scope.boUser,
@@ -179,6 +184,19 @@
             alert("服务调用失败！");
             self.location = 'allReservation.html';
           });
+        };
+
+        $scope.validate = function () {
+          if ($scope.rForm.age1.$error.minlength || $scope.rForm.age1.$error.maxlength) {
+            return false;
+          }
+          if ($scope.rForm.tel1.$error.required || $scope.rForm.tel1.$error.minlength || $scope.rForm.tel1.$error.maxlength || $scope.rForm.tel1.$error.pattern) {
+            return false;
+          }
+          if (!$scope.personNumCheck()){
+            return false;
+          }
+          return true;
         };
 
         $scope.changeReserveDate = function () {
