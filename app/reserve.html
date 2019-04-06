@@ -108,7 +108,7 @@
                 if ($scope.rForm.tel1.$error.required || $scope.rForm.tel1.$error.minlength || $scope.rForm.tel1.$error.maxlength || $scope.rForm.tel1.$error.pattern) {
                     return false;
                 }
-                if (!personNumCheck()){
+                if (!$scope.personNumCheck()){
                     return false;
                 }
                 return true;
