@@ -473,7 +473,7 @@
         <div>
           <form name="rForm" ng-submit="reserveForm()">
             <div class="int">
-              <label>联系人姓名:</label>
+              <label>领队姓名:</label>
               <input placeholder="请输入联系人姓名" type="text" ng-model="reserveVO.linkManName" required />
             </div>
             <div class="int">
@@ -498,7 +498,7 @@
               </div>
             </div>
             <div class="int">
-              <label>电话号码:</label><input name="tel1" placeholder="请输入手机号码" ng-pattern="/^1[3|5][0-9]\d{4,8}$/" type="tel" ng-minlength="11"
+              <label>联系电话:</label><input name="tel1" placeholder="请输入手机号码" ng-pattern="/^1[3|5][0-9]\d{4,8}$/" type="tel" ng-minlength="11"
                                          ng-maxlength="15" ng-model="reserveVO.phoneNumber" required />
               <div class="col-xs-12">
                 <p class="glyphicon glyphicon-ok input_result text-success"
@@ -528,7 +528,7 @@
               </select>
             </div>
             <div class="int">
-              <label>预约人数:</label>
+              <label>团队人数:</label>
               <select ng-model="reserveVO.peopleCount" required>
                 <option value="{{reserveVO.peopleCount}}" disabled selected>{{reserveVO.peopleCount}}</option>
                 <option ng-repeat="t in validPeopleRange" value="{{t}}">
@@ -536,7 +536,7 @@
                 </option>
               </select>
             </div>
-            <div class="int">
+            <div class="int" hidden>
               <label>预约类型:</label>
               <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" disabled />团队
               <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled />个人
