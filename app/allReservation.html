@@ -171,9 +171,9 @@
             <thead>
               <tr>
                 <th style="background-color:#fcc80a; width: 60px;">联系人</th>
-                <th style="background-color:#fcc80a; width: 28px;">类型</th>
-                <th style="background-color:#fcc80a; width: 55px;">预定日期</th>
-                <th style="background-color:#fcc80a; width: 100px;">预定时间</th>
+<!--                <th style="background-color:#fcc80a; width: 28px;">类型</th>-->
+                <th style="background-color:#fcc80a; width: 55px;">预约日期</th>
+                <th style="background-color:#fcc80a; width: 100px;">预约时间</th>
                 <th style="background-color:#fcc80a">签到</th>
               </tr>
             </thead>
@@ -183,8 +183,8 @@
                 <td hidden>{{item.signIn}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 60px;" ng-click="detail(item.reservationInfoId)">{{item.linkManName}}</td>
                 <td ng-if="$even" style="width: 60px;" ng-click="detail(item.reservationInfoId)">{{item.linkManName}}</td>
-                <td ng-if="$odd" style="background-color:lightgray; width: 28px;" ng-click="detail(item.reservationInfoId)">{{activityT[item.activityType]}}</td>
-                <td ng-if="$even" style="width: 28px;" ng-click="detail(item.reservationInfoId)">{{activityT[item.activityType]}}</td>
+<!--                <td ng-if="$odd" style="background-color:lightgray; width: 28px;" ng-click="detail(item.reservationInfoId)">{{activityT[item.activityType]}}</td>-->
+<!--                <td ng-if="$even" style="width: 28px;" ng-click="detail(item.reservationInfoId)">{{activityT[item.activityType]}}</td>-->
                 <td ng-if="$odd" style="background-color:lightgray; width: 55px;" ng-click="detail(item.reservationInfoId)">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$even" style="width: 55px;" ng-click="detail(item.reservationInfoId)">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 100px;" ng-click="detail(item.reservationInfoId)">{{item.timeString}}</td>
@@ -219,9 +219,9 @@
             <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
                     ng-click="reserveTeam()">预约团队
             </button>
-            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"
-                    ng-click="reserveSingle()">预约个人
-            </button>
+<!--            <button type="button" class="button button-glow button-rounded button-raised button-primary button-tiny" style="margin-bottom: 10px"-->
+<!--                    ng-click="reserveSingle()">预约个人-->
+<!--            </button>-->
           </div>
         </div>
       </div>

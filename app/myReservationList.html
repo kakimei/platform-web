@@ -41,6 +41,7 @@
 
       var app = angular.module("myReservationList", ['ngCookies']);
       app.controller('myReservationListController', function ($cookies, $scope, $http) {
+        $scope.canModify = false;
         $scope.searchKey;
         $scope.searchValue;
         $scope.reservationListForm = {};
@@ -62,6 +63,8 @@
             }
           }).then(function (resp) {
             $scope.reservationListForm = resp.data;
+            var now = $filter("date")(new Date(), "yyyy-MM-dd");
+            $scope.canModify = $scope.reserveVO.reserveDay > now;
           }, function (resp) {
             alert("服务调用失败！");
           });
@@ -129,23 +132,24 @@
     <div class="middle">
       <div ng-controller="myReservationListController as reservationListVO" class="main" data-ng-init="load()">
         <div>
-          <div>
-            <select ng-model="searchKey">
-              <option value="" disabled selected>查询字段</option>
-              <option value="linkManName">联系人</option>
-              <option value="phoneNumber">联系电话</option>
-            </select>
-            <input type="text" placeholder="查询内容" ng-model="searchValue" />
-            <button class="button button-3d button-box button-jumbo button-tiny" ng-click="searchReservation()">搜索</button>
-          </div>
+<!--          <div>-->
+<!--            <select ng-model="searchKey">-->
+<!--              <option value="" disabled selected>查询字段</option>-->
+<!--              <option value="linkManName">联系人</option>-->
+<!--              <option value="phoneNumber">联系电话</option>-->
+<!--            </select>-->
+<!--            <input type="text" placeholder="查询内容" ng-model="searchValue" />-->
+<!--            <button class="button button-3d button-box button-jumbo button-tiny" ng-click="searchReservation()">搜索</button>-->
+<!--          </div>-->
           <table class=table8_1 style="margin-top: 10px">
             <thead>
               <tr>
                 <th style="background-color:#fcc80a; width: 40px;">联系人</th>
-                <th style="background-color:#fcc80a; width: 28px;">类型</th>
+<!--                <th style="background-color:#fcc80a; width: 28px;">类型</th>-->
                 <th style="background-color:#fcc80a; width: 90px;">联系电话</th>
                 <th style="background-color:#fcc80a; width: 55px;">预约日期</th>
                 <th style="background-color:#fcc80a">预约时间</th>
+                <th style="background-color:#fcc80a; width: 28px;"></th>-->
               </tr>
             </thead>
             <tbody>
@@ -154,14 +158,18 @@
                 <td hidden>{{item.signIn}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 40px;">{{item.linkManName}}</td>
                 <td ng-if="$even" style="width: 40px;">{{item.linkManName}}</td>
-                <td ng-if="$odd" style="background-color:lightgray; width: 28px;">{{activityT[item.activityType]}}</td>
-                <td ng-if="$even" style="width: 28px;">{{activityT[item.activityType]}}</td>
+<!--                <td ng-if="$odd" style="background-color:lightgray; width: 28px;">{{activityT[item.activityType]}}</td>-->
+<!--                <td ng-if="$even" style="width: 28px;">{{activityT[item.activityType]}}</td>-->
                 <td ng-if="$odd" style="background-color:lightgray; width: 90px;">{{item.phoneNumber}}</td>
                 <td ng-if="$even" style="width: 90px;">{{item.phoneNumber}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$even" style="width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
                 <td ng-if="$even">{{item.timeString}}</td>
+                <td ng-if="$odd && canModify" style="background-color:lightgray; width: 28px;">更新/取消</td>
+                <td ng-if="$odd && !canModify" style="background-color:lightgray; width: 28px;"></td>
+                <td ng-if="$even && canModify" style="width: 28px;">更新/取消</td>
+                <td ng-if="$even && !canModify" style="width: 28px;"></td>
               </tr>
             </tbody>
           </table>
