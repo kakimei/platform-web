@@ -148,8 +148,8 @@
 <!--                <th style="background-color:#fcc80a; width: 28px;">类型</th>-->
                 <th style="background-color:#fcc80a; width: 90px;">联系电话</th>
                 <th style="background-color:#fcc80a; width: 55px;">预约日期</th>
-                <th style="background-color:#fcc80a">预约时间</th>
-                <th style="background-color:#fcc80a; width: 28px;"></th>-->
+                <th style="background-color:#fcc80a; width: 55px;">预约时间</th>
+                <th style="background-color:#fcc80a"></th>
               </tr>
             </thead>
             <tbody>
@@ -164,12 +164,12 @@
                 <td ng-if="$even" style="width: 90px;">{{item.phoneNumber}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$even" style="width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
-                <td ng-if="$odd" style="background-color:lightgray">{{item.timeString}}</td>
-                <td ng-if="$even">{{item.timeString}}</td>
-                <td ng-if="$odd && canModify" style="background-color:lightgray; width: 28px;">更新/取消</td>
-                <td ng-if="$odd && !canModify" style="background-color:lightgray; width: 28px;"></td>
-                <td ng-if="$even && canModify" style="width: 28px;">更新/取消</td>
-                <td ng-if="$even && !canModify" style="width: 28px;"></td>
+                <td ng-if="$odd" style="background-color:lightgray; width: 55px;">{{item.timeString}}</td>
+                <td ng-if="$even" style="width: 55px;">{{item.timeString}}</td>
+                <td ng-if="$odd && canModify" style="background-color:lightgray">更新/取消</td>
+                <td ng-if="$odd && !canModify" style="background-color:lightgray"></td>
+                <td ng-if="$even && canModify">更新/取消</td>
+                <td ng-if="$even && !canModify"></td>
               </tr>
             </tbody>
           </table>
