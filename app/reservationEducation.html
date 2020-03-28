@@ -53,6 +53,7 @@
                 }).then(function (resp) {
                     if (resp.data != null) {
                         $scope.openid = resp.data.openid;
+                        alert($scope.openid);
                         $scope.registerAndLogin();
                     } else {
                         alert("登录失败");
