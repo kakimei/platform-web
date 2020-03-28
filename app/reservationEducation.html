@@ -121,7 +121,7 @@
         <div style="padding: 10px; float: left; ">
             <script type="text/ng-template" id="education.html">
                 <div class="main2">
-                    <div style="padding: 20px; float: left; position:relative; top: 50px; left: -196px; right: 196px;
+                    <div style="padding: 20px; float: left; position:relative; top: 50px;
                     background: rgba(255,255,255,1)">
                         <span style="float: top">杨浦滨江欢迎您</span><br>
                         <p style="line-height: 20px; position: relative; font-size: 10px">
@@ -144,8 +144,8 @@
                 </div>
             </script>
             <div class="int">
-                <input type="checkbox" ng-model="agree"/>我已阅读并同意<button ng-click="openModel()"><span
-                    style="color: #6495ed; ">《预约服务说明》</span></button>
+                <input type="checkbox" ng-model="agree"/>我已阅读并同意<span ng-click="openModel()"
+                    style="color: #6495ed; ">《预约服务说明》</span>
             </div>
             <div style="margin-top: 30px; margin-bottom: 10px">
                 <button class="button button-3d button-raised button-primary button-pill" ng-disabled="!agree"
