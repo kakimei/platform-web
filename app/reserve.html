@@ -33,6 +33,8 @@
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
     <script src="css/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
     <script>
         $(function () {
             if (window.location.href.indexOf('?id=') >= 0 || window.location.href.indexOf('?url=') >= 0) {
@@ -47,8 +49,16 @@
             });
         });
 
-        var app = angular.module("reserve", ['ngCookies']);
-        app.controller('reserveController', function ($cookies, $scope, $http, $filter) {
+        var app = angular.module("reserve", ['ngCookies', 'ui.bootstrap']);
+        app.controller('reserveController', function ($cookies, $scope, $http, $filter, $modal) {
+            $scope.openModel = function() {
+                var modalInstance = $modal.open({
+                    templateUrl : 'education.html',
+                    controller : 'educationModalCtrl',
+                    backdrop: 'static'
+                }, { size: 'md' })
+            };
+
             $scope.reserveVO.linkManName = "";
             $scope.reserveVO.identityCard = "";
             $scope.reserveVO.sex = "MALE";
@@ -382,6 +392,12 @@
                 $scope.reserveVO.age = d.getFullYear() - parseInt(year,10) - monthFloor;
             }
         });
+
+        app.controller('educationModalCtrl', function($scope, $modalInstance) {
+            $scope.confirm = function() {
+                $modalInstance.close();
+            }
+        });
     </script>
     <title>资源预约</title>
 </head>
@@ -404,6 +420,30 @@
 <div class="middle">
     <div ng-controller="reserveController as reserveVO" class="main" data-ng-init="load()">
         <div>
+            <script type="text/ng-template" id="education.html">
+                <div class="main2">
+                    <div style="padding: 20px; float: left; position:relative; top: 50px;
+                    background: rgba(255,255,255,1)">
+                        <span style="float: top">杨浦滨江欢迎您</span><br>
+                        <p style="line-height: 20px; position: relative; font-size: 10px">
+                            <span style="float: top">预约服务说明</span><br>
+                            <span style="float: left">1、欢迎预约杨浦滨江讲解服务，本服务不收取任何费用。游客将在讲解员带领之下参观杨浦滨江。参观过程需听从讲解员的指引安排，按指定线路文明参观，注意人身安全。杨浦滨江讲解段总长约5.5公里，全程采用步行方式，儿童、老人及行动不便者请在亲友的陪同下参观。</span><br>
+                            <span style="float: left">2、团队讲解服务时间：每周二，9:00-10:00、10:00-11:00、14:00-15:00、15:00-16:00、16:00-17:00。如需其他时间请联系我们。团体人数为15人以上，不超过50人。领队需管理好团队秩序，确保团队人数。</span><br>
+                            <span style="float: left">3、请提前至少一周在线预约，预约有效时间为预约日期起的一个月内。</span><br>
+                            <span style="float: left">4、在线预约采用实名制，请确保您的个人信息和联系方式准确。</span><br>
+                            <span style="float: left">5、预约成功后，您将收到预约确认信息，稍后我们工作人员将与您联系确认。如无法前来参观，需提前两个工作日告知，或者在线取消预约。</span><br>
+                            <span style="float: left">6、请按预约时间准时到达秦皇岛驿站旅游咨询中心（上海市杨浦区秦皇岛路1号轮渡站二楼），需随身携带预约人身份证原件签到时出示。预约时间过后，仍未到达，则视为自动放弃本次预约。</span><br>
+                            <span style="float: left">7、如到场团队人数过少，我们将改成提供感应导览耳麦设备服务，游客佩戴后可自行参观游览并收听讲解。</span><br>
+                            <span style="float: left">8、如因故无法接待已预约的团队，我们将在通知预约方后另行安排预约时间，敬请谅解。</span><br>
+                            <span style="float: left">9、咨询电话：021-65676687 杨浦区旅游市场管理事务中心</span><br>
+                        <div style="margin-top: 30px; margin-bottom: 10px; text-align:center">
+                            <button class="button button-3d button-raised button-primary button-tiny button-pill" ng-click="confirm()">确认
+                            </button>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+            </script>
             <form name="rForm" ng-submit="reserveForm()">
                 <div class="int">
                     <label>领队姓名:</label>
@@ -478,8 +518,13 @@
                     <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" disabled/>团队
                     <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled/>个人
                 </div>
+                <div class="int">
+                    <input type="checkbox" ng-model="agree" style="vertical-align: middle"/>
+                    <span style="vertical-align: middle">我已阅读并同意</span>
+                    <span ng-click="openModel()" style="color: #6495ed; vertical-align: middle">《预约服务说明》</span>
+                </div>
                 <button type="submit" class="button button-glow button-rounded button-raised button-primary"
-                        style="margin-bottom: 10px">预约
+                        style="margin-bottom: 10px" ng-disabled="!agree">预约
                 </button>
                 <button type="button" class="button button-glow button-border button-rounded button-primary"
                         style="margin-bottom: 10px"
