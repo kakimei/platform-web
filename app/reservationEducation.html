@@ -9,16 +9,26 @@
     <script src="https://code.angularjs.org/1.7.5/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.5/angular-cookies.min.js"></script>
     <script src="css/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
     <script>
 
-        var app = angular.module("reservationEducation", ['ngCookies']);
-        app.controller('reservationEducationController', function ($cookies, $scope, $http) {
+        var app = angular.module("reservationEducation", ['ngCookies', 'ui.bootstrap']);
+        app.controller('reservationEducationController', function ($cookies, $scope, $http, $modal) {
             $scope.agree = false;
             $scope.openid = "";
             $scope.beginReserve = function () {
                 var hre = 'reserve.html?activityType=TEAM';
                 location.href = hre;
             };
+
+            $scope.openModel = function() {
+                var modalInstance = $modal.open({
+                    templateUrl : 'education.html',
+                    controller : 'educationModalCtrl',
+                    backdrop: 'static'
+                }, { size: 'md' })
+            }
 
             $scope.myReservation = function () {
                 var hre = 'myReservationList.html';
@@ -82,7 +92,12 @@
                 }
                 return null;
             };
-        })
+        });
+        app.controller('educationModalCtrl', function($scope, $modalInstance) {
+            $scope.confirm = function() {
+                $modalInstance.close();
+            }
+        });
     </script>
     <title>预约导航</title>
 </head>
@@ -94,7 +109,7 @@
     </div>
 </div>
 <div>
-    <img class="header-image" src="img/hd-bg.jpeg">
+    <img class="header-image" src="img/hd-bg.png">
 </div>
 <div class="middle">
     <div class="bodytitle">
@@ -103,37 +118,34 @@
         </div>
     </div>
     <div ng-controller="reservationEducationController" class="main2" data-ng-init="load()">
-        <div style="padding: 10px; float: left">
-            <span style="float: top">杨浦滨江欢迎您</span><br>
-            <p style="line-height: 20px; position: relative; font-size: 10px">
-                <span style="float: top">预约服务说明</span><br>
-                <span style="float: left">1、欢迎预约杨浦滨江讲解服务，本服务不收取任何费用。游客将在讲解</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp员带领之下参观杨浦滨江。参观过程需听从讲解员的指引安排，按指定</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp线路文明参观，注意人身安全。杨浦滨江讲解段总长约5.5公里，全程</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp采用步行方式，儿童、老人及行动不便者请在亲友的陪同下参观。</span><br>
-                <span style="float: left">2、团队讲解服务时间：</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp每周二，9:00-10:00、10:00-11:00、14:00-15:00、</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp15:00-16:00、16:00-17:00。</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp如需其他时间请联系我们。团体人数为15人以上，不超过50人。</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp领队需管理好团队秩序，确保团队人数。</span><br>
-                <span style="float: left">3、请提前至少一周在线预约，预约有效时间为预约日期起的一个月内。</span><br>
-                <span style="float: left">4、在线预约采用实名制，请确保您的个人信息和联系方式准确。</span><br>
-                <span style="float: left">5、预约成功后，您将收到预约确认信息，稍后我们工作人员将与您</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp联系确认。如无法前来参观，需提前两个工作日告知，或者在线取消</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp预约。</span><br>
-                <span style="float: left">6、请按预约时间准时到达秦皇岛驿站旅游咨询中心（上海市杨浦区</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp秦皇岛路1号轮渡站二楼），需随身携带预约人身份证原件签到时</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp出示。预约时间过后，仍未到达，则视为自动放弃本次预约。</span><br>
-                <span style="float: left">7、如到场团队人数过少，我们将改成提供感应导览耳麦设备服务，</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp游客佩戴后可自行参观游览并收听讲解。</span><br>
-                <span style="float: left">8、如因故无法接待已预约的团队，我们将在通知预约方后另行安排</span><br>
-                <span style="float: left">&nbsp&nbsp&nbsp预约时间，敬请谅解。</span><br>
-                <span style="float: left">9、咨询电话：021-65676687</span><br>
-
-                杨浦区旅游市场管理事务中心
-            </p>
+        <div style="padding: 10px; float: left; ">
+            <script type="text/ng-template" id="education.html">
+                <div class="main2">
+                    <div style="padding: 20px; float: left; position:relative; top: 50px; left: -196px; right: 196px;
+                    background: rgba(255,255,255,1)">
+                        <span style="float: top">杨浦滨江欢迎您</span><br>
+                        <p style="line-height: 20px; position: relative; font-size: 10px">
+                            <span style="float: top">预约服务说明</span><br>
+                            <span style="float: left">1、欢迎预约杨浦滨江讲解服务，本服务不收取任何费用。游客将在讲解员带领之下参观杨浦滨江。参观过程需听从讲解员的指引安排，按指定线路文明参观，注意人身安全。杨浦滨江讲解段总长约5.5公里，全程采用步行方式，儿童、老人及行动不便者请在亲友的陪同下参观。</span><br>
+                            <span style="float: left">2、团队讲解服务时间：每周二，9:00-10:00、10:00-11:00、14:00-15:00、15:00-16:00、16:00-17:00。如需其他时间请联系我们。团体人数为15人以上，不超过50人。领队需管理好团队秩序，确保团队人数。</span><br>
+                            <span style="float: left">3、请提前至少一周在线预约，预约有效时间为预约日期起的一个月内。</span><br>
+                            <span style="float: left">4、在线预约采用实名制，请确保您的个人信息和联系方式准确。</span><br>
+                            <span style="float: left">5、预约成功后，您将收到预约确认信息，稍后我们工作人员将与您联系确认。如无法前来参观，需提前两个工作日告知，或者在线取消预约。</span><br>
+                            <span style="float: left">6、请按预约时间准时到达秦皇岛驿站旅游咨询中心（上海市杨浦区秦皇岛路1号轮渡站二楼），需随身携带预约人身份证原件签到时出示。预约时间过后，仍未到达，则视为自动放弃本次预约。</span><br>
+                            <span style="float: left">7、如到场团队人数过少，我们将改成提供感应导览耳麦设备服务，游客佩戴后可自行参观游览并收听讲解。</span><br>
+                            <span style="float: left">8、如因故无法接待已预约的团队，我们将在通知预约方后另行安排预约时间，敬请谅解。</span><br>
+                            <span style="float: left">9、咨询电话：021-65676687 杨浦区旅游市场管理事务中心</span><br>
+                            <div style="margin-top: 30px; margin-bottom: 10px; text-align:center">
+                                <button class="button button-3d button-raised button-primary button-tiny button-pill" ng-click="confirm()">确认
+                                </button>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </script>
             <div class="int">
-                <input type="checkbox" ng-model="agree"/>我同意上述条款
+                <input type="checkbox" ng-model="agree"/>我已阅读并同意<button ng-click="openModel()"><span
+                    style="color: #6495ed; ">《预约服务说明》</span></button>
             </div>
             <div style="margin-top: 30px; margin-bottom: 10px">
                 <button class="button button-3d button-raised button-primary button-pill" ng-disabled="!agree"
