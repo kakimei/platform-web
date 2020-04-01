@@ -20,7 +20,7 @@ body {
   position: fixed;
   left: initial;
   top: 0;
-  background-color: #0AF;
+  background-color: #016baf;
   width: 100%;
   min-width: 320px;
   height: 40px;
@@ -195,10 +195,10 @@ body {
 }
 
 .table8_1 th {
-  background-color: #96A5FF;
-  background: -o-linear-gradient(90deg, #96A5FF, #c3cbfe);
-  background: -moz-linear-gradient(center top, #96A5FF 5%, #c3cbfe 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #96A5FF), color-stop(1, #c3cbfe));
+  background-color: #016baf;
+  background: -o-linear-gradient(90deg, #016baf, #c3cbfe);
+  background: -moz-linear-gradient(center top, #016baf 5%, #c3cbfe 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #016baf), color-stop(1, #c3cbfe));
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#96A5FF', endColorstr='#c3cbfe');
   color: #FFFFFF
 }
