@@ -482,11 +482,11 @@
             <form name="rForm" ng-submit="reserveForm()">
                 <div class="int">
                     <label>领队姓名:</label>
-                    <input placeholder="请输入联系人姓名" type="text" ng-model="reserveVO.linkManName" required/>
+                    <input placeholder="请输入联系人姓名" type="text" ng-model="reserveVO.linkManName" disabled/>
                 </div>
                 <div class="int">
                     <label>身份证号码:</label>
-                    <input name="identityCard" placeholder="请输入身份证号码" type="text" ng-model="reserveVO.identityCard" ng-change="calculateSexAndAge()" required/>
+                    <input name="identityCard" placeholder="请输入身份证号码" type="text" ng-model="reserveVO.identityCard" ng-change="calculateSexAndAge()" disabled/>
                     <div class="col-xs-12">
                         <p class="text-danger glyphicon glyphicon-remove"
                            ng-if="!personNumCheck()&&rForm.identityCard.$touched"
@@ -510,7 +510,7 @@
                 <div class="int">
                     <label>联系电话:</label><input name="tel1" placeholder="请输入手机号码" ng-pattern="/^1[3|5][0-9]\d{4,8}$/"
                                                type="tel" ng-minlength="11"
-                                               ng-maxlength="15" ng-model="reserveVO.phoneNumber" required/>
+                                               ng-maxlength="15" ng-model="reserveVO.phoneNumber" disabled/>
                     <div class="col-xs-12">
                         <p class="glyphicon glyphicon-ok input_result text-success"
                            ng-if="rForm.tel1.$valid"></p>
@@ -523,7 +523,7 @@
                 </div>
                 <div class="int">
                     <label>预约日期:</label>
-                    <select ng-model="reserveVO.reserveDay" ng-change="changeReserveDate()" required>
+                    <select ng-model="reserveVO.reserveDay" ng-change="changeReserveDate()" disabled>
                         <option value="{{reserveVO.reserveDay}}" disabled selected>{{reserveVO.reserveDay |
                             date:'yyyy-MM-dd'}}
                         </option>
@@ -533,7 +533,7 @@
                 </div>
                 <div class="int">
                     <label>预约时间段:</label>
-                    <select ng-model="reserveVO.timeString" ng-change="changeReserveTime()" required>
+                    <select ng-model="reserveVO.timeString" ng-change="changeReserveTime()" disabled>
                         <option value="{{reserveVO.timeString}}" disabled selected>
                             {{timeFormatString2(reserveVO.timeString)}}
                         </option>
@@ -545,7 +545,7 @@
                 </div>
                 <div class="int">
                     <label>团队人数:</label>
-                    <select ng-model="reserveVO.peopleCount" required>
+                    <select ng-model="reserveVO.peopleCount" disabled>
                         <option value="{{reserveVO.peopleCount}}" disabled selected>{{reserveVO.peopleCount}}</option>
                         <option ng-repeat="t in validPeopleRange" value="{{t}}">
                             {{t}}
@@ -557,10 +557,10 @@
                     <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="TEAM" disabled/>团队
                     <input name="activityType" type="radio" ng-model="reserveVO.activityType" value="SINGLE" disabled/>个人
                 </div>
-                <button ng-if="canModify" type="submit"
-                        class="button button-glow button-rounded button-raised button-primary button-tiny"
-                        style="margin-bottom: 10px">更新
-                </button>
+<!--                <button ng-if="canModify" type="submit"-->
+<!--                        class="button button-glow button-rounded button-raised button-primary button-tiny"-->
+<!--                        style="margin-bottom: 10px">更新-->
+<!--                </button>-->
                 <button ng-if="canModify" type="button"
                         class="button button-glow button-rounded button-raised button-primary button-tiny"
                         style="margin-bottom: 10px" ng-click="cancel()">取消

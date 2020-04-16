@@ -165,9 +165,9 @@
                 <td ng-if="$even" style="width: 55px;">{{item.reserveDay | date:'MM/dd'}}</td>
                 <td ng-if="$odd" style="background-color:lightgray; width: 55px;">{{item.timeString}}</td>
                 <td ng-if="$even" style="width: 55px;">{{item.timeString}}</td>
-                <td ng-if="$odd && item.canModify" style="background-color:lightgray">更新/取消</td>
+                <td ng-if="$odd && item.canModify" style="background-color:lightgray">取消</td>
                 <td ng-if="$odd && !item.canModify" style="background-color:lightgray"></td>
-                <td ng-if="$even && item.canModify">更新/取消</td>
+                <td ng-if="$even && item.canModify">取消</td>
                 <td ng-if="$even && !item.canModify"></td>
               </tr>
             </tbody>
